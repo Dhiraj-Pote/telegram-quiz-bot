@@ -669,21 +669,67 @@ async function showLeaderboard(chatId, quizDate) {
 }
 
 // ============= ERROR HANDLING =============
+let botIsHealthy = true;
+let lastPollTime = Date.now();
+
 bot.on('polling_error', (error) => {
   console.log('Polling error:', error);
+  botIsHealthy = false;
+  
+  // Try to restart polling after error
+  setTimeout(() => {
+    console.log('Attempting to restart bot polling...');
+    bot.stopPolling().then(() => {
+      bot.startPolling();
+      botIsHealthy = true;
+      lastPollTime = Date.now();
+    }).catch(err => {
+      console.error('Failed to restart polling:', err);
+    });
+  }, 5000);
+});
+
+// Update last poll time on successful message
+bot.on('message', () => {
+  lastPollTime = Date.now();
+  botIsHealthy = true;
 });
 
 // ============= HEALTH CHECK SERVER (for Render.com) =============
 const http = require('http');
 const server = http.createServer((req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('Bot is running! ✅');
+  // Check if bot has been inactive for more than 5 minutes
+  const timeSinceLastPoll = Date.now() - lastPollTime;
+  const isStale = timeSinceLastPoll > 5 * 60 * 1000;
+  
+  if (botIsHealthy && !isStale) {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Bot is running! ✅');
+  } else {
+    res.writeHead(503, { 'Content-Type': 'text/plain' });
+    res.end('Bot is unhealthy ❌');
+  }
 });
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log(`✅ Health check server running on port ${PORT}`);
 });
+
+// Periodic health check - restart if needed
+setInterval(() => {
+  const timeSinceLastPoll = Date.now() - lastPollTime;
+  if (timeSinceLastPoll > 10 * 60 * 1000) { // 10 minutes
+    console.log('⚠️ Bot appears stale, restarting polling...');
+    bot.stopPolling().then(() => {
+      bot.startPolling();
+      lastPollTime = Date.now();
+      botIsHealthy = true;
+    }).catch(err => {
+      console.error('Failed to restart:', err);
+    });
+  }
+}, 2 * 60 * 1000); // Check every 2 minutes
 
 console.log('🤖 Daily Quiz Bot is running...');
 console.log('Current quiz date:', getCurrentQuizDate());
