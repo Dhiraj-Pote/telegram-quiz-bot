@@ -17,9 +17,9 @@ const DAILY_QUIZZES = {
   '2025-12-23': {
     questions: [
       {
-        question: "Who was the first son of Diti ?",
-        options: ["Hiraṇyākṣa", "Hiraṇyakaśipu ", "Kaśyapa Muni", "Prahlāda "],
-        correct: 1
+        question: "According to the Pinda-siddhi logic mentioned in the SB 3/17/18 purport, why was Hiranyakasipu considered the elder twin despite being born second ?",
+        options: ["He was delivered from the right side of the womb.", "Brahma explicitly named him the elder in a benediction. ", "He was the first to be conceived in the womb.", "He exhibited greater physical strength at the moment of birth. "],
+        correct: 2
       },
       {
         question: "What was the cause of natural disturbances & bad omen throughout the universe?",
@@ -27,14 +27,14 @@ const DAILY_QUIZZES = {
         correct: 3      
       },
       {
-        question: "Who was the killer of demon Hiraṇyākṣa ?",
-        options: ["Hayagrīva ", "Varuna dev", "Varāha ", "Vāmana "],
+        question: "Which of the following was NOT described as an inauspicious omen at the birth of the demons ?",
+        options: ["She-jackals vomited fire and howled ominously. ", "Cows passed dung and urine out of sheer terror.", "Flowers rained from the sky in the heavenly planets. ", "The earth and mountains quaked violently. "],
         correct: 2
       },
       {
-        question: "Who pasified the demigods upon the birth of the demon's born of Diti's womb ?",
-        options: ["Śiva ", "Brahmā ", "Indra ", "Viṣṇu "],
-        correct: 1
+        question: "When Hiranyaksa entered the ocean searching for a fight, how did the aquatic creatures react ?",
+        options: ["They formed an army to defend the palace of Varuna. ", "They remained indifferent as he was a land-dweller. ", "They fled in great fear, even though he did not strike them. ", "They gathered to offer him tributes of gold and jewels. "],
+        correct: 2
       },
       {
         question: "Which one is lord Varuna's Planet ?",
