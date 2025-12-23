@@ -2,11 +2,11 @@
 // File: bot.js
 
 const TelegramBot = require('node-telegram-bot-api');
-const sqlite3 = require('sqlite3').verbose();
+const Database = require('better-sqlite3');
 
 // ============= CONFIGURATION =============
 const BOT_TOKEN = '8590540828:AAFDdhQzqP3_LQLcTLPNZbtOe8s2Mb8A3DU';
-const db = new sqlite3.Database('./quiz.db');
+const db = new Database('./quiz.db');
 
 // Admin username (can attempt quiz unlimited times)
 const ADMIN_USERNAME = 'ys16108';
@@ -94,38 +94,36 @@ function getQuizQuestions(quizDate) {
 }
 
 // ============= DATABASE SETUP =============
-db.serialize(() => {
-  db.run(`CREATE TABLE IF NOT EXISTS users (
-    user_id INTEGER,
-    quiz_date TEXT,
-    username TEXT,
-    first_name TEXT,
-    has_attempted INTEGER DEFAULT 0,
-    PRIMARY KEY (user_id, quiz_date)
-  )`);
+db.exec(`CREATE TABLE IF NOT EXISTS users (
+  user_id INTEGER,
+  quiz_date TEXT,
+  username TEXT,
+  first_name TEXT,
+  has_attempted INTEGER DEFAULT 0,
+  PRIMARY KEY (user_id, quiz_date)
+)`);
 
-  db.run(`CREATE TABLE IF NOT EXISTS results (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER,
-    quiz_date TEXT,
-    username TEXT,
-    first_name TEXT,
-    score INTEGER,
-    total_time INTEGER,
-    user_answers TEXT,
-    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
-  )`);
+db.exec(`CREATE TABLE IF NOT EXISTS results (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER,
+  quiz_date TEXT,
+  username TEXT,
+  first_name TEXT,
+  score INTEGER,
+  total_time INTEGER,
+  user_answers TEXT,
+  timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+)`);
 
-  db.run(`CREATE TABLE IF NOT EXISTS active_quizzes (
-    user_id INTEGER PRIMARY KEY,
-    quiz_date TEXT,
-    current_question INTEGER,
-    score INTEGER,
-    start_time INTEGER,
-    question_start_time INTEGER,
-    user_answers TEXT
-  )`);
-});
+db.exec(`CREATE TABLE IF NOT EXISTS active_quizzes (
+  user_id INTEGER PRIMARY KEY,
+  quiz_date TEXT,
+  current_question INTEGER,
+  score INTEGER,
+  start_time INTEGER,
+  question_start_time INTEGER,
+  user_answers TEXT
+)`);
 
 // ============= BOT INITIALIZATION =============
 const bot = new TelegramBot(BOT_TOKEN, { polling: true });
@@ -133,111 +131,57 @@ const userTimers = {};
 
 // ============= HELPER FUNCTIONS =============
 function hasUserAttempted(userId, quizDate) {
-  return new Promise((resolve, reject) => {
-    db.get('SELECT has_attempted FROM users WHERE user_id = ? AND quiz_date = ?', 
-      [userId, quizDate], (err, row) => {
-      if (err) reject(err);
-      resolve(row && row.has_attempted === 1);
-    });
-  });
+  const row = db.prepare('SELECT has_attempted FROM users WHERE user_id = ? AND quiz_date = ?')
+    .get(userId, quizDate);
+  return row && row.has_attempted === 1;
 }
 
 function markUserAttempted(userId, quizDate, username, firstName) {
-  return new Promise((resolve, reject) => {
-    db.run(
-      'INSERT OR REPLACE INTO users (user_id, quiz_date, username, first_name, has_attempted) VALUES (?, ?, ?, ?, 1)',
-      [userId, quizDate, username, firstName],
-      (err) => {
-        if (err) reject(err);
-        else resolve();
-      }
-    );
-  });
+  db.prepare(
+    'INSERT OR REPLACE INTO users (user_id, quiz_date, username, first_name, has_attempted) VALUES (?, ?, ?, ?, 1)'
+  ).run(userId, quizDate, username, firstName);
 }
 
 function saveResult(userId, quizDate, username, firstName, score, totalTime, userAnswers) {
-  return new Promise((resolve, reject) => {
-    db.run(
-      'INSERT INTO results (user_id, quiz_date, username, first_name, score, total_time, user_answers) VALUES (?, ?, ?, ?, ?, ?, ?)',
-      [userId, quizDate, username, firstName, score, totalTime, JSON.stringify(userAnswers)],
-      (err) => {
-        if (err) reject(err);
-        else resolve();
-      }
-    );
-  });
+  db.prepare(
+    'INSERT INTO results (user_id, quiz_date, username, first_name, score, total_time, user_answers) VALUES (?, ?, ?, ?, ?, ?, ?)'
+  ).run(userId, quizDate, username, firstName, score, totalTime, JSON.stringify(userAnswers));
 }
 
 function getUserResult(userId, quizDate) {
-  return new Promise((resolve, reject) => {
-    db.get('SELECT * FROM results WHERE user_id = ? AND quiz_date = ?', 
-      [userId, quizDate], (err, row) => {
-      if (err) reject(err);
-      else resolve(row);
-    });
-  });
+  return db.prepare('SELECT * FROM results WHERE user_id = ? AND quiz_date = ?')
+    .get(userId, quizDate);
 }
 
 function getLeaderboard(quizDate) {
-  return new Promise((resolve, reject) => {
-    db.all(
-      `SELECT username, first_name, score, total_time 
-       FROM results 
-       WHERE quiz_date = ?
-       ORDER BY score DESC, total_time ASC 
-       LIMIT 10`,
-      [quizDate],
-      (err, rows) => {
-        if (err) reject(err);
-        else resolve(rows);
-      }
-    );
-  });
+  return db.prepare(
+    `SELECT username, first_name, score, total_time 
+     FROM results 
+     WHERE quiz_date = ?
+     ORDER BY score DESC, total_time ASC 
+     LIMIT 10`
+  ).all(quizDate);
 }
 
 function startQuiz(userId, quizDate) {
-  return new Promise((resolve, reject) => {
-    const now = Date.now();
-    db.run(
-      'INSERT OR REPLACE INTO active_quizzes (user_id, quiz_date, current_question, score, start_time, question_start_time, user_answers) VALUES (?, ?, 0, 0, ?, ?, ?)',
-      [userId, quizDate, now, now, JSON.stringify([])],
-      (err) => {
-        if (err) reject(err);
-        else resolve();
-      }
-    );
-  });
+  const now = Date.now();
+  db.prepare(
+    'INSERT OR REPLACE INTO active_quizzes (user_id, quiz_date, current_question, score, start_time, question_start_time, user_answers) VALUES (?, ?, 0, 0, ?, ?, ?)'
+  ).run(userId, quizDate, now, now, JSON.stringify([]));
 }
 
 function getQuizState(userId) {
-  return new Promise((resolve, reject) => {
-    db.get('SELECT * FROM active_quizzes WHERE user_id = ?', [userId], (err, row) => {
-      if (err) reject(err);
-      else resolve(row);
-    });
-  });
+  return db.prepare('SELECT * FROM active_quizzes WHERE user_id = ?').get(userId);
 }
 
 function updateQuizState(userId, currentQuestion, score, questionStartTime, userAnswers) {
-  return new Promise((resolve, reject) => {
-    db.run(
-      'UPDATE active_quizzes SET current_question = ?, score = ?, question_start_time = ?, user_answers = ? WHERE user_id = ?',
-      [currentQuestion, score, questionStartTime, JSON.stringify(userAnswers), userId],
-      (err) => {
-        if (err) reject(err);
-        else resolve();
-      }
-    );
-  });
+  db.prepare(
+    'UPDATE active_quizzes SET current_question = ?, score = ?, question_start_time = ?, user_answers = ? WHERE user_id = ?'
+  ).run(currentQuestion, score, questionStartTime, JSON.stringify(userAnswers), userId);
 }
 
 function deleteQuizState(userId) {
-  return new Promise((resolve, reject) => {
-    db.run('DELETE FROM active_quizzes WHERE user_id = ?', [userId], (err) => {
-      if (err) reject(err);
-      else resolve();
-    });
-  });
+  db.prepare('DELETE FROM active_quizzes WHERE user_id = ?').run(userId);
 }
 
 function clearTimer(userId) {
