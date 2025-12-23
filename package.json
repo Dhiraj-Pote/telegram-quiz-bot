@@ -3,8 +3,7 @@
     "version": "1.0.0",
     "main": "bot.js",
     "scripts": {
-        "start": "node bot.js",
-        "build": "npm rebuild sqlite3"
+        "start": "node bot.js"
     },
     "dependencies": {
         "node-telegram-bot-api": "^0.64.0",
