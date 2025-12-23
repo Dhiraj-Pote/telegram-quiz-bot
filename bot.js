@@ -673,6 +673,18 @@ bot.on('polling_error', (error) => {
   console.log('Polling error:', error);
 });
 
+// ============= HEALTH CHECK SERVER (for Render.com) =============
+const http = require('http');
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('Bot is running! ✅');
+});
+
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+  console.log(`✅ Health check server running on port ${PORT}`);
+});
+
 console.log('🤖 Daily Quiz Bot is running...');
 console.log('Current quiz date:', getCurrentQuizDate());
 console.log('📅 Remember to add new quiz questions daily!');
