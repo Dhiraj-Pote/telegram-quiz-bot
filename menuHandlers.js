@@ -56,11 +56,8 @@ async function showQuizDetails(bot, chatId, userId, quizId, isAdmin) {
   }
 
   const attempted = hasUserAttempted(userId, quizId);
-  const shareLink = getShareableLink(quizId);
 
-  let detailText = `🎯 *${quiz.title}*\n\n`;
-  detailText += `📖 ${quiz.description}\n\n`;
-  detailText += `� Sharte: \`${shareLink}\`\n\n`;
+  let detailText = `🎯 *${quiz.title}* 📖\n\n`;
 
   if (attempted && !isAdmin) {
     detailText += `✅ _You have already completed this quiz!_`;
