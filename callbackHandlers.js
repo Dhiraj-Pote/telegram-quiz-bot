@@ -1,5 +1,5 @@
 // Callback query handlers
-const { ADMIN_USERNAME } = require('./config');
+const { ADMIN_USERNAMES } = require('./config');
 const { getQuiz, getAvailableQuizzes } = require('./quizData');
 const { hasUserAttempted, startQuizSession, getQuizState } = require('./database');
 const { getShareableLink } = require('./utils');
@@ -12,7 +12,7 @@ function setupCallbacks(bot) {
     const userId = query.from.id;
     const data = query.data;
     const username = query.from.username || '';
-    const isAdmin = username.toLowerCase() === ADMIN_USERNAME.toLowerCase();
+    const isAdmin = ADMIN_USERNAMES.includes(username.toLowerCase());
 
     try {
       if (data === 'browse_quizzes') {

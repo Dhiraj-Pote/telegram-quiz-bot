@@ -1,5 +1,5 @@
 // Bot command handlers
-const { ADMIN_USERNAME } = require('./config');
+const { ADMIN_USERNAMES } = require('./config');
 const { getQuiz, getAvailableQuizzes } = require('./quizData');
 const { clearUserData, listUsers } = require('./database');
 const { getShareableLink } = require('./utils');
@@ -11,7 +11,7 @@ function setupCommands(bot) {
     const chatId = msg.chat.id;
     const userId = msg.from.id;
     const username = msg.from.username || '';
-    const isAdmin = username.toLowerCase() === ADMIN_USERNAME.toLowerCase();
+    const isAdmin = ADMIN_USERNAMES.includes(username.toLowerCase());
     const quizId = match[1];
 
     if (quizId && getQuiz(quizId)) {
@@ -82,7 +82,7 @@ function setupCommands(bot) {
   bot.onText(/\/clearuser\s+(\S+)\s+(\S+)/, async (msg, match) => {
     const chatId = msg.chat.id;
     const username = msg.from.username || '';
-    const isAdmin = username.toLowerCase() === ADMIN_USERNAME.toLowerCase();
+    const isAdmin = ADMIN_USERNAMES.includes(username.toLowerCase());
 
     if (!isAdmin) {
       bot.sendMessage(chatId, '⛔ Admin only command.');
@@ -100,7 +100,7 @@ function setupCommands(bot) {
   bot.onText(/\/listusers(?:\s+(.+))?/, async (msg, match) => {
     const chatId = msg.chat.id;
     const username = msg.from.username || '';
-    const isAdmin = username.toLowerCase() === ADMIN_USERNAME.toLowerCase();
+    const isAdmin = ADMIN_USERNAMES.includes(username.toLowerCase());
 
     if (!isAdmin) {
       bot.sendMessage(chatId, '⛔ Admin only command.');
