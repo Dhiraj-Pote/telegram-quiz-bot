@@ -531,87 +531,100 @@ bot.on('callback_query', async (query) => {
   const username = query.from.username || '';
   const isAdmin = username.toLowerCase() === ADMIN_USERNAME.toLowerCase();
 
-  // Browse quizzes
-  if (data === 'browse_quizzes') {
-    await showQuizList(chatId);
-  }
-  // View leaderboards menu
-  else if (data === 'view_leaderboards') {
-    const quizzes = getAllQuizzes();
-    const keyboard = {
-      inline_keyboard: quizzes.map(q => [
-        { text: `🏆 ${q.title}`, callback_data: `lb_${q.id}` }
-      ])
-    };
-    keyboard.inline_keyboard.push([{ text: '◀️ Back', callback_data: 'back_main' }]);
-    bot.sendMessage(chatId, '🏆 *Select a quiz to view its leaderboard:*', {
-      parse_mode: 'Markdown',
-      reply_markup: keyboard
-    });
-  }
-  // Back to main menu
-  else if (data === 'back_main') {
-    await showMainMenu(chatId);
-  }
-  // View specific quiz
-  else if (data.startsWith('quiz_')) {
-    const quizId = data.replace('quiz_', '');
-    await showQuizDetails(chatId, userId, quizId, isAdmin);
-  }
-  // Start quiz
-  else if (data.startsWith('start_')) {
-    const quizId = data.replace('start_', '');
-    const quiz = getQuiz(quizId);
-    
-    if (!quiz) {
-      bot.answerCallbackQuery(query.id, { text: 'Quiz not found!', show_alert: true });
-      return;
+  try {
+    // Browse quizzes
+    if (data === 'browse_quizzes') {
+      await showQuizList(chatId);
+    }
+    // View leaderboards menu
+    else if (data === 'view_leaderboards') {
+      const quizzes = getAllQuizzes();
+      const keyboard = {
+        inline_keyboard: quizzes.map(q => [
+          { text: `🏆 ${q.title}`, callback_data: `lb_${q.id}` }
+        ])
+      };
+      keyboard.inline_keyboard.push([{ text: '◀️ Back', callback_data: 'back_main' }]);
+      bot.sendMessage(chatId, '🏆 *Select a quiz to view its leaderboard:*', {
+        parse_mode: 'Markdown',
+        reply_markup: keyboard
+      });
+    }
+    // Back to main menu
+    else if (data === 'back_main') {
+      await showMainMenu(chatId);
+    }
+    // View specific quiz
+    else if (data.startsWith('quiz_')) {
+      const quizId = data.replace('quiz_', '');
+      await showQuizDetails(chatId, userId, quizId, isAdmin);
+    }
+    // Start quiz
+    else if (data.startsWith('start_')) {
+      const quizId = data.replace('start_', '');
+      const quiz = getQuiz(quizId);
+      
+      if (!quiz) {
+        bot.answerCallbackQuery(query.id, { text: 'Quiz not found!', show_alert: true });
+        return;
+      }
+
+      const attempted = hasUserAttempted(userId, quizId);
+      if (attempted && !isAdmin) {
+        bot.answerCallbackQuery(query.id, { text: 'You already completed this quiz!', show_alert: true });
+        return;
+      }
+
+      startQuizSession(userId, quizId);
+      await sendQuestion(chatId, userId, quizId, 0);
+    }
+    // View leaderboard
+    else if (data.startsWith('lb_')) {
+      const quizId = data.replace('lb_', '');
+      await showLeaderboard(chatId, quizId);
+    }
+    // Review answers
+    else if (data.startsWith('review_')) {
+      const quizId = data.replace('review_', '');
+      await showReview(chatId, userId, quizId);
+    }
+    // Share quiz
+    else if (data.startsWith('share_')) {
+      const quizId = data.replace('share_', '');
+      const quiz = getQuiz(quizId);
+      if (!quiz) return;
+      const link = getShareableLink(quizId);
+      
+      bot.sendMessage(chatId,
+        `🔗 *Share "${quiz.title}"*\n\n` +
+        `${link}\n\n` +
+        `_Forward this link to friends!_`,
+        { parse_mode: 'Markdown' }
+      );
+    }
+    // Answer question
+    else if (data.startsWith('answer_')) {
+      const parts = data.split('_');
+      const quizId = parts[1];
+      const questionIndex = parseInt(parts[2]);
+      const answerIndex = parseInt(parts[3]);
+
+      // Check if user has active quiz session
+      const state = getQuizState(userId);
+      if (!state || state.quiz_id !== quizId) {
+        bot.answerCallbackQuery(query.id, { text: 'Quiz session expired. Please start again.', show_alert: true });
+        return;
+      }
+
+      clearTimer(userId);
+      await handleAnswer(chatId, userId, query.message.message_id, quizId, questionIndex, answerIndex);
     }
 
-    const attempted = hasUserAttempted(userId, quizId);
-    if (attempted && !isAdmin) {
-      bot.answerCallbackQuery(query.id, { text: 'You already completed this quiz!', show_alert: true });
-      return;
-    }
-
-    startQuizSession(userId, quizId);
-    await sendQuestion(chatId, userId, quizId, 0);
+    bot.answerCallbackQuery(query.id);
+  } catch (error) {
+    console.error('Callback error:', error);
+    bot.answerCallbackQuery(query.id, { text: 'An error occurred', show_alert: true });
   }
-  // View leaderboard
-  else if (data.startsWith('lb_')) {
-    const quizId = data.replace('lb_', '');
-    await showLeaderboard(chatId, quizId);
-  }
-  // Review answers
-  else if (data.startsWith('review_')) {
-    const quizId = data.replace('review_', '');
-    await showReview(chatId, userId, quizId);
-  }
-  // Share quiz
-  else if (data.startsWith('share_')) {
-    const quizId = data.replace('share_', '');
-    const quiz = getQuiz(quizId);
-    const link = getShareableLink(quizId);
-    
-    bot.sendMessage(chatId,
-      `🔗 *Share "${quiz.title}"*\n\n` +
-      `${link}\n\n` +
-      `_Forward this link to friends!_`,
-      { parse_mode: 'Markdown' }
-    );
-  }
-  // Answer question
-  else if (data.startsWith('answer_')) {
-    const parts = data.split('_');
-    const quizId = parts[1];
-    const questionIndex = parseInt(parts[2]);
-    const answerIndex = parseInt(parts[3]);
-
-    clearTimer(userId);
-    await handleAnswer(chatId, userId, query.message.message_id, quizId, questionIndex, answerIndex);
-  }
-
-  bot.answerCallbackQuery(query.id);
 });
 
 
@@ -685,6 +698,13 @@ async function handleAnswer(chatId, userId, messageId, quizId, questionIndex, an
   const quiz = getQuiz(quizId);
   const question = quiz.questions[questionIndex];
   const state = getQuizState(userId);
+  
+  // Safety check - if no state, quiz session expired
+  if (!state) {
+    bot.sendMessage(chatId, '⚠️ Quiz session expired. Please start again.');
+    return;
+  }
+
   const isCorrect = answerIndex === question.correct;
 
   clearTimer(userId);
@@ -710,11 +730,13 @@ async function handleAnswer(chatId, userId, messageId, quizId, questionIndex, an
       `${question.question}\n\n` +
       `Answer: ${question.options[question.correct]}`;
     
-    await bot.editMessageText(feedbackText, {
-      chat_id: chatId,
-      message_id: messageId,
-      parse_mode: 'Markdown'
-    });
+    try {
+      await bot.editMessageText(feedbackText, {
+        chat_id: chatId,
+        message_id: messageId,
+        parse_mode: 'Markdown'
+      });
+    } catch (e) {}
 
     updateQuizState(userId, state.current_question + 1, state.score + 1, Date.now(), userAnswers);
   } else {
@@ -723,11 +745,13 @@ async function handleAnswer(chatId, userId, messageId, quizId, questionIndex, an
       `Your answer: ${question.options[answerIndex]}\n` +
       `Correct answer: ${question.options[question.correct]}`;
     
-    await bot.editMessageText(feedbackText, {
-      chat_id: chatId,
-      message_id: messageId,
-      parse_mode: 'Markdown'
-    });
+    try {
+      await bot.editMessageText(feedbackText, {
+        chat_id: chatId,
+        message_id: messageId,
+        parse_mode: 'Markdown'
+      });
+    } catch (e) {}
 
     updateQuizState(userId, state.current_question + 1, state.score, Date.now(), userAnswers);
   }
@@ -742,6 +766,9 @@ async function handleTimeout(chatId, userId, messageId, quizId, questionIndex) {
   const question = quiz.questions[questionIndex];
   const state = getQuizState(userId);
 
+  // Safety check
+  if (!state) return;
+
   const userAnswers = JSON.parse(state.user_answers);
   userAnswers.push(null);
 
@@ -749,11 +776,13 @@ async function handleTimeout(chatId, userId, messageId, quizId, questionIndex) {
     `${question.question}\n\n` +
     `Correct answer: ${question.options[question.correct]}`;
 
-  await bot.editMessageText(timeoutText, {
-    chat_id: chatId,
-    message_id: messageId,
-    parse_mode: 'Markdown'
-  });
+  try {
+    await bot.editMessageText(timeoutText, {
+      chat_id: chatId,
+      message_id: messageId,
+      parse_mode: 'Markdown'
+    });
+  } catch (e) {}
 
   updateQuizState(userId, state.current_question + 1, state.score, Date.now(), userAnswers);
 
@@ -766,6 +795,13 @@ async function handleTimeout(chatId, userId, messageId, quizId, questionIndex) {
 async function finishQuiz(chatId, userId, quizId) {
   const state = getQuizState(userId);
   const quiz = getQuiz(quizId);
+  
+  // Safety check
+  if (!state || !quiz) {
+    bot.sendMessage(chatId, '⚠️ Quiz session not found.');
+    return;
+  }
+
   const totalTime = Math.floor((Date.now() - state.start_time) / 1000);
   const userAnswers = JSON.parse(state.user_answers);
 
@@ -903,9 +939,31 @@ async function showLeaderboard(chatId, quizId) {
 
 // ============= ERROR HANDLING =============
 bot.on('polling_error', (error) => {
-  console.log('Polling error:', error);
+  console.error('Polling error:', error.code, error.message);
+});
+
+bot.on('error', (error) => {
+  console.error('Bot error:', error.message);
+});
+
+// Graceful shutdown
+process.on('SIGINT', () => {
+  console.log('\nShutting down bot...');
+  bot.stopPolling();
+  db.close();
+  process.exit(0);
+});
+
+process.on('SIGTERM', () => {
+  console.log('\nShutting down bot...');
+  bot.stopPolling();
+  db.close();
+  process.exit(0);
 });
 
 console.log('🤖 Quiz Bot is running...');
 console.log(`📚 Total quizzes available: ${Object.keys(QUIZZES).length}`);
-console.log('🔗 Shareable links format: https://t.me/BOT_USERNAME?start=quiz_ID');
+Object.keys(QUIZZES).forEach(id => {
+  console.log(`   - ${id}: ${QUIZZES[id].title}`);
+});
+console.log(`🔗 Share links: https://t.me/${BOT_USERNAME}?start=quiz_ID`);
