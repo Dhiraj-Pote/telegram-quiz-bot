@@ -14,35 +14,35 @@ const ADMIN_USERNAME = 'ys16108';
 // ============= DAILY QUIZ QUESTIONS =============
 // Change these questions daily! Format: YYYY-MM-DD
 const DAILY_QUIZZES = {
-  '2025-12-23': {
+  '2025-12-24': {
     questions: [
       {
-        question: "According to the Pinda-siddhi logic mentioned in the SB 3/17/18 purport, why was Hiranyakasipu considered the elder twin despite being born second ?",
-        options: ["He was delivered from the right side of the womb.", "Brahma explicitly named him the elder in a benediction. ", "He was the first to be conceived in the womb.", "He exhibited greater physical strength at the moment of birth. "],
-        correct: 2
+        question: "Who is described as the most independent demigod of the universe who came to witness the fight?",
+        options: ["Lord Shiva", "Lord Brahma", "Indra", "Manu"],
+        correct: 1
       },
       {
-        question: "What was the cause of natural disturbances & bad omen throughout the universe?",
-        options: ["Attack's caused by the demon's", "It was the time for a dissolution of the universe.", "End of Brahma's Kalpa.", "Birth of Diti's son's"],
-        correct: 3      
+        question: "How did Lord Varaha ensure the safety of the Earth before engaging in the final duel?",
+        options: ["He placed her on the water and empowered her to float", "He hid the Earth behind the sun", "He handed the Earth over to Lord Brahma", "He swallowed the Earth to keep her safe inside His body"],
+        correct: 0
       },
       {
-        question: "Which of the following was NOT described as an inauspicious omen at the birth of the demons ?",
-        options: ["She-jackals vomited fire and howled ominously. ", "Cows passed dung and urine out of sheer terror.", "Flowers rained from the sky in the heavenly planets. ", "The earth and mountains quaked violently. "],
-        correct: 2
+        question: "Why did Lord Brahma urge Lord Varaha to kill the demon quickly without 'playing' with him?",
+        options: ["Because the 'demoniac hour' (evening) was fast approaching", "Because the Earth was starting to sink again", "Because the demon was gaining strength from the sun", "Because the demigods were about to lose their immortality"],
+        correct: 0
       },
       {
-        question: "When Hiranyaksa entered the ocean searching for a fight, how did the aquatic creatures react ?",
-        options: ["They formed an army to defend the palace of Varuna. ", "They remained indifferent as he was a land-dweller. ", "They fled in great fear, even though he did not strike them. ", "They gathered to offer him tributes of gold and jewels. "],
-        correct: 2
+        question: "Did the demon Hiranyaksha glorify the Lord with his words, despite his wanting to deride Him?",
+        options: ["True", "False"],
+        correct: 0
       },
       {
-        question: "Which one is lord Varuna's Planet ?",
-        options: ["Virajā", "Varuna loka", "Indraloka", "Vibhavari"],
+        question: "Who refuses liberation even if it is offered to them?",
+        options: ["Impersonalists", "Asuras", "Karmis", "Devotees of the Lord"],
         correct: 3
       }
     ],
-    validUntil: '2025-12-25' // 2 days validity
+    validUntil: '2025-12-26' // 2 days validity
   },
   // Add new quiz for next day
   '2025-12-25': {
@@ -214,10 +214,10 @@ bot.onText(/\/start/, async (msg) => {
   const validUntil = DAILY_QUIZZES[quizDate].validUntil;
   const showStartButton = !attempted || isAdmin;
 
-  const welcomeMessage = `🎯 *Śrīmad Bhāgavatam Quiz\n (Canto 3 chapter 17)!*\n\n` +
+  const welcomeMessage = `🎯 *Śrīmad Bhāgavatam Quiz\n (Canto 3 chapter 18)!*\n\n` +
 
     `⏰ Valid Until: ${validUntil}\n\n` +
-    `Please read SB (Canto 3 chapter 17)\nbefore attempting this quiz\n\n` +
+    `Please read SB (Canto 3 chapter 18)\nbefore attempting this quiz\n\n` +
 
     `${attempted && !isAdmin ? '✅ You have already taken this quiz!\nYou can review your answers.' : '✨ Ready to begin?'}`;
 
