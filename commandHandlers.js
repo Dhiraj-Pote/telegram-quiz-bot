@@ -1,6 +1,6 @@
 // Bot command handlers
 const { ADMIN_USERNAME } = require('./config');
-const { getQuiz, getAllQuizzes } = require('./quizData');
+const { getQuiz, getAvailableQuizzes } = require('./quizData');
 const { clearUserData, listUsers } = require('./database');
 const { getShareableLink } = require('./utils');
 const { showMainMenu, showQuizList, showQuizDetails, showLeaderboard } = require('./menuHandlers');
@@ -56,7 +56,7 @@ function setupCommands(bot) {
     const quizId = match[1]?.trim();
 
     if (!quizId) {
-      const quizzes = getAllQuizzes();
+      const quizzes = getAvailableQuizzes();
       const keyboard = {
         inline_keyboard: quizzes.map(q => [
           { text: `🏆 ${q.title}`, callback_data: `lb_${q.id}` }

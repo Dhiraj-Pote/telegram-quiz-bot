@@ -61,7 +61,9 @@ process.on('SIGTERM', () => {
 
 console.log('🤖 Quiz Bot is running...');
 console.log(`📚 Total quizzes available: ${Object.keys(QUIZZES).length}`);
-Object.keys(QUIZZES).forEach(id => {
-  console.log(`   - ${id}: ${QUIZZES[id].title}`);
+const availableQuizzes = require('./quizData').getAvailableQuizzes();
+console.log(`✅ Currently accessible: ${availableQuizzes.length}`);
+availableQuizzes.forEach(quiz => {
+  console.log(`   - ${quiz.id}: ${quiz.title} (${quiz.createdDate})`);
 });
 console.log(`🔗 Share links: https://t.me/${BOT_USERNAME}?start=quiz_ID`);

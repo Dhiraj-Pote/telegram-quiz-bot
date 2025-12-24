@@ -1,10 +1,10 @@
 // Menu and UI handlers
-const { getQuiz, getAllQuizzes } = require('./quizData');
+const { getQuiz, getAvailableQuizzes } = require('./quizData');
 const { hasUserAttempted, getLeaderboard, getUserResult } = require('./database');
 const { getShareableLink } = require('./utils');
 
 async function showMainMenu(bot, chatId) {
-  const quizzes = getAllQuizzes();
+  const quizzes = getAvailableQuizzes();
   
   let menuText = `🎯 *Welcome to the Quiz Bot!*\n\n`;
   menuText += `📚 *Available Quizzes:* ${quizzes.length}\n\n`;
@@ -27,7 +27,7 @@ async function showMainMenu(bot, chatId) {
 }
 
 async function showQuizList(bot, chatId) {
-  const quizzes = getAllQuizzes();
+  const quizzes = getAvailableQuizzes();
 
   if (quizzes.length === 0) {
     bot.sendMessage(chatId, '⚠️ No quizzes available yet.');

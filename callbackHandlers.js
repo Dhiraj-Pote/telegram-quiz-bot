@@ -1,6 +1,6 @@
 // Callback query handlers
 const { ADMIN_USERNAME } = require('./config');
-const { getQuiz, getAllQuizzes } = require('./quizData');
+const { getQuiz, getAvailableQuizzes } = require('./quizData');
 const { hasUserAttempted, startQuizSession, getQuizState } = require('./database');
 const { getShareableLink } = require('./utils');
 const { showMainMenu, showQuizList, showQuizDetails, showReview, showLeaderboard } = require('./menuHandlers');
@@ -19,7 +19,7 @@ function setupCallbacks(bot) {
         await showQuizList(bot, chatId);
       }
       else if (data === 'view_leaderboards') {
-        const quizzes = getAllQuizzes();
+        const quizzes = getAvailableQuizzes();
         const keyboard = {
           inline_keyboard: quizzes.map(q => [
             { text: `🏆 ${q.title}`, callback_data: `lb_${q.id}` }
@@ -87,11 +87,6 @@ function setupCallbacks(bot) {
         
         if (!state) {
           bot.answerCallbackQuery(query.id, { text: 'Quiz session expired. Please start again.', show_alert: true });
-          return;
-        }
-        
-        if (state.quiz_id !== quizId) {
-          bot.answerCallbackQuery(query.id, { text: 'This is not your current quiz. Please start again.', show_alert: true });
           return;
         }
         

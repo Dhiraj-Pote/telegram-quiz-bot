@@ -170,8 +170,20 @@ function getAllQuizzes() {
   return Object.values(QUIZZES);
 }
 
+function getAvailableQuizzes() {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // Set to start of day for comparison
+  
+  return Object.values(QUIZZES).filter(quiz => {
+    const quizDate = new Date(quiz.createdDate);
+    quizDate.setHours(0, 0, 0, 0);
+    return quizDate <= today; // Only show quizzes from today or earlier
+  });
+}
+
 module.exports = {
   QUIZZES,
   getQuiz,
-  getAllQuizzes
+  getAllQuizzes,
+  getAvailableQuizzes
 };
