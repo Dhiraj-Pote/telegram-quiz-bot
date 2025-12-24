@@ -90,7 +90,8 @@ function setupCallbacks(bot) {
           return;
         }
         
-        if (state.current_question !== questionIndex) {
+        // Allow admins to answer any question, but regular users can only answer the current question
+        if (!isAdmin && state.current_question !== questionIndex) {
           bot.answerCallbackQuery(query.id, { text: 'This question has already been answered.', show_alert: true });
           return;
         }
