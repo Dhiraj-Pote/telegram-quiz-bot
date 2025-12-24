@@ -2,7 +2,7 @@
 const { QUESTION_TIME_LIMIT } = require('./config');
 const { getQuiz } = require('./quizData');
 const { getQuizState, updateQuizState, deleteQuizState, markUserAttempted, saveResult } = require('./database');
-const { getShareableLink, sleep } = require('./utils');
+const { getShareableLink, sleep, escapeMarkdown } = require('./utils');
 
 const userTimers = {};
 
@@ -25,9 +25,9 @@ async function sendQuestion(bot, chatId, userId, quizId, questionIndex) {
 
   const question = questions[questionIndex];
 
-  const questionText = `📝 *${quiz.title}*\n` +
+  const questionText = `📝 *${escapeMarkdown(quiz.title)}*\n` +
     `Question ${questionIndex + 1}/${questions.length}\n\n` +
-    `${question.question}\n\n` +
+    `${escapeMarkdown(question.question)}\n\n` +
     `⏱️ Time: ${QUESTION_TIME_LIMIT} seconds`;
 
   const keyboard = {
@@ -53,9 +53,9 @@ async function sendQuestion(bot, chatId, userId, quizId, questionIndex) {
       return;
     }
 
-    const updatedText = `📝 *${quiz.title}*\n` +
+    const updatedText = `📝 *${escapeMarkdown(quiz.title)}*\n` +
       `Question ${questionIndex + 1}/${questions.length}\n\n` +
-      `${question.question}\n\n` +
+      `${escapeMarkdown(question.question)}\n\n` +
       `⏱️ Time: ${remaining} seconds`;
 
     try {
@@ -116,8 +116,8 @@ async function handleAnswer(bot, chatId, userId, messageId, quizId, questionInde
 
   if (isCorrect) {
     const feedbackText = `*Correct!*\n\n` +
-      `${question.question}\n\n` +
-      `Answer: ${question.options[question.correct]}`;
+      `${escapeMarkdown(question.question)}\n\n` +
+      `Answer: ${escapeMarkdown(question.options[question.correct])}`;
     
     try {
       await bot.editMessageText(feedbackText, {
@@ -130,9 +130,9 @@ async function handleAnswer(bot, chatId, userId, messageId, quizId, questionInde
     updateQuizState(userId, state.current_question + 1, state.score + 1, Date.now(), userAnswers);
   } else {
     const feedbackText = `*Wrong!*\n\n` +
-      `${question.question}\n\n` +
-      `Your answer: ${question.options[answerIndex]}\n` +
-      `Correct answer: ${question.options[question.correct]}`;
+      `${escapeMarkdown(question.question)}\n\n` +
+      `Your answer: ${escapeMarkdown(question.options[answerIndex])}\n` +
+      `Correct answer: ${escapeMarkdown(question.options[question.correct])}`;
     
     try {
       await bot.editMessageText(feedbackText, {
@@ -161,8 +161,8 @@ async function handleTimeout(bot, chatId, userId, messageId, quizId, questionInd
   userAnswers.push(null);
 
   const timeoutText = `*Time's Up!*\n\n` +
-    `${question.question}\n\n` +
-    `Correct answer: ${question.options[question.correct]}`;
+    `${escapeMarkdown(question.question)}\n\n` +
+    `Correct answer: ${escapeMarkdown(question.options[question.correct])}`;
 
   try {
     await bot.editMessageText(timeoutText, {
@@ -237,7 +237,7 @@ async function finishQuiz(bot, chatId, userId, quizId) {
   const resultText = `${resultEmoji} *Quiz Complete!*\n\n` +
     `${resultMessage}\n\n` +
     `📊 *Your Results:*\n` +
-    `Quiz: ${quiz.title}\n` +
+    `Quiz: ${escapeMarkdown(quiz.title)}\n` +
     `Score: ${state.score}/${totalQuestions}\n` +
     `Time: ${totalTime} seconds\n\n` +
     `🔗 Share this quiz: ${shareLink}`;

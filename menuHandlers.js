@@ -1,7 +1,7 @@
 // Menu and UI handlers
 const { getQuiz, getAvailableQuizzes } = require('./quizData');
 const { hasUserAttempted, getLeaderboard, getUserResult } = require('./database');
-const { getShareableLink } = require('./utils');
+const { getShareableLink, escapeMarkdown } = require('./utils');
 
 async function showMainMenu(bot, chatId) {
   const quizzes = getAvailableQuizzes();
@@ -57,7 +57,7 @@ async function showQuizDetails(bot, chatId, userId, quizId, isAdmin) {
 
   const attempted = hasUserAttempted(userId, quizId);
 
-  let detailText = `🎯 *${quiz.title}* 📖\n\n`;
+  let detailText = `🎯 *${escapeMarkdown(quiz.title)}* 📖\n\n`;
 
   if (attempted && !isAdmin) {
     detailText += `✅ _You have already completed this quiz!_`;
@@ -97,7 +97,7 @@ async function showReview(bot, chatId, userId, quizId) {
   const questions = quiz.questions;
   const userAnswers = JSON.parse(result.user_answers);
 
-  let reviewText = `📝 *Review: ${quiz.title}*\n\n`;
+  let reviewText = `📝 *Review: ${escapeMarkdown(quiz.title)}*\n\n`;
   reviewText += `📊 Score: ${result.score}/${questions.length}\n`;
   reviewText += `⏱️ Time: ${result.total_time}s\n\n`;
 
@@ -105,15 +105,15 @@ async function showReview(bot, chatId, userId, quizId) {
     const userChoice = userAnswers[qIndex];
     const isCorrect = userChoice === q.correct;
 
-    reviewText += `*Q${qIndex + 1}: ${q.question}*\n`;
+    reviewText += `*Q${qIndex + 1}: ${escapeMarkdown(q.question)}*\n`;
 
     if (userChoice === null) {
       reviewText += `⏰ Time's up - No answer\n`;
     } else if (isCorrect) {
-      reviewText += `✅ Your answer: ${q.options[userChoice]}\n`;
+      reviewText += `✅ Your answer: ${escapeMarkdown(q.options[userChoice])}\n`;
     } else {
-      reviewText += `❌ Your answer: ${q.options[userChoice]}\n`;
-      reviewText += `✓ Correct: ${q.options[q.correct]}\n`;
+      reviewText += `❌ Your answer: ${escapeMarkdown(q.options[userChoice])}\n`;
+      reviewText += `✓ Correct: ${escapeMarkdown(q.options[q.correct])}\n`;
     }
     reviewText += `\n`;
   });
@@ -137,12 +137,12 @@ async function showLeaderboard(bot, chatId, quizId) {
     return;
   }
 
-  let leaderboardText = `🏆 *Leaderboard: ${quiz.title}*\n\n`;
+  let leaderboardText = `🏆 *Leaderboard: ${escapeMarkdown(quiz.title)}*\n\n`;
 
   leaderboard.forEach((entry, index) => {
     const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `${index + 1}.`;
     const name = entry.first_name || entry.username || 'Anonymous';
-    leaderboardText += `${medal} *${name}* - ${entry.score}/${quiz.questions.length} (${entry.total_time}s)\n`;
+    leaderboardText += `${medal} *${escapeMarkdown(name)}* - ${entry.score}/${quiz.questions.length} (${entry.total_time}s)\n`;
   });
 
   const shareLink = getShareableLink(quizId);
