@@ -81,6 +81,12 @@ async function sendQuestion(bot, chatId, userId, quizId, questionIndex) {
 
 async function handleAnswer(bot, chatId, userId, messageId, quizId, questionIndex, answerIndex) {
   const quiz = getQuiz(quizId);
+  
+  if (!quiz) {
+    bot.sendMessage(chatId, '⚠️ Quiz not found.');
+    return;
+  }
+  
   const question = quiz.questions[questionIndex];
   const state = getQuizState(userId);
   

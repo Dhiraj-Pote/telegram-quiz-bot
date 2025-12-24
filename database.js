@@ -36,6 +36,11 @@ function initDatabase() {
     question_start_time INTEGER,
     user_answers TEXT
   )`);
+
+  // Clean up any active quiz sessions on startup (bot restart)
+  // This prevents "session expired" errors from old sessions
+  db.prepare('DELETE FROM active_quizzes').run();
+  console.log('✓ Cleaned up old quiz sessions');
 }
 
 // User operations

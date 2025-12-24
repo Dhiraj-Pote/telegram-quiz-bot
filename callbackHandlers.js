@@ -84,8 +84,19 @@ function setupCallbacks(bot) {
         const answerIndex = parseInt(parts[3]);
 
         const state = getQuizState(userId);
-        if (!state || state.quiz_id !== quizId) {
+        
+        if (!state) {
           bot.answerCallbackQuery(query.id, { text: 'Quiz session expired. Please start again.', show_alert: true });
+          return;
+        }
+        
+        if (state.quiz_id !== quizId) {
+          bot.answerCallbackQuery(query.id, { text: 'This is not your current quiz. Please start again.', show_alert: true });
+          return;
+        }
+        
+        if (state.current_question !== questionIndex) {
+          bot.answerCallbackQuery(query.id, { text: 'This question has already been answered.', show_alert: true });
           return;
         }
 
