@@ -56,29 +56,24 @@ const QUIZZES = {
     createdDate: '2025-12-24',
     questions: [
       {
-        question: "Sample Question 1 - Replace with actual question",
-        options: ["Option A", "Option B", "Option C", "Option D"],
-        correct: 0
-      },
-      {
-        question: "Sample Question 2 - Replace with actual question",
-        options: ["Option A", "Option B", "Option C", "Option D"],
+        question: "Who is described as the most independent demigod of the universe who came to witness the fight?",
+        options: ["Lord Shiva", "Lord Brahma", "Indra", "Manu"],
         correct: 1
       },
       {
-        question: "Sample Question 3 - Replace with actual question",
-        options: ["Option A", "Option B", "Option C", "Option D"],
-        correct: 2
-      },
-      {
-        question: "Sample Question 4 - Replace with actual question",
-        options: ["Option A", "Option B", "Option C", "Option D"],
-        correct: 3
-      },
-      {
-        question: "Sample Question 5 - Replace with actual question",
-        options: ["Option A", "Option B", "Option C", "Option D"],
+        question: "How did Lord Varaha ensure the safety of the Earth before engaging in the final duel?",
+        options: ["He placed her on the water and empowered her to float", "He hid the Earth behind the sun", "He handed the Earth over to Lord Brahma", "He swallowed the Earth to keep her safe inside His body"],
         correct: 0
+      },
+      {
+        question: "Did the demon Hiranyaksha glorify the Lord with his words, despite his wanting to deride Him?",
+        options: ["True", "False"],
+        correct: 0
+      },
+      {
+        question: "Who refuses liberation even if it is offered to them?",
+        options: ["Impersonalists", "Asuras", "Karmis", "Devotees of the Lord"],
+        correct: 3
       }
     ]
   },
