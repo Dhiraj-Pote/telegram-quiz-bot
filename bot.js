@@ -45,7 +45,7 @@ const DAILY_QUIZZES = {
     validUntil: '2025-12-25' // 2 days validity
   },
   // Add new quiz for next day
-  '2025-12-24': {
+  '2025-12-25': {
     questions: [
       {
         question: "What is the smallest country in the world?",
