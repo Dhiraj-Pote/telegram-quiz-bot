@@ -2,7 +2,7 @@
 const { ADMIN_USERNAMES } = require('./config');
 const { getQuiz, getAvailableQuizzes } = require('./quizData');
 const { hasUserAttempted, startQuizSession, getQuizState } = require('./database');
-const { getShareableLink } = require('./utils');
+const { getShareableLink, escapeMarkdown } = require('./utils');
 const { showMainMenu, showQuizList, showQuizDetails, showReview, showLeaderboard } = require('./menuHandlers');
 const { sendQuestion, handleAnswer, clearTimer } = require('./quizLogic');
 
@@ -71,7 +71,7 @@ function setupCallbacks(bot) {
         const link = getShareableLink(quizId);
         
         bot.sendMessage(chatId,
-          `🔗 *Share "${quiz.title}"*\n\n` +
+          `🔗 *Share "${escapeMarkdown(quiz.title)}"*\n\n` +
           `${link}\n\n` +
           `_Forward this link to friends!_`,
           { parse_mode: 'Markdown' }

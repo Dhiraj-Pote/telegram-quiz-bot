@@ -2,7 +2,7 @@
 const { ADMIN_USERNAMES } = require('./config');
 const { getQuiz, getAvailableQuizzes } = require('./quizData');
 const { clearUserData, listUsers } = require('./database');
-const { getShareableLink } = require('./utils');
+const { getShareableLink, escapeMarkdown } = require('./utils');
 const { showMainMenu, showQuizList, showQuizDetails, showLeaderboard } = require('./menuHandlers');
 
 function setupCommands(bot) {
@@ -42,8 +42,8 @@ function setupCommands(bot) {
     const link = getShareableLink(quizId);
     bot.sendMessage(chatId, 
       `🔗 *Share this quiz:*\n\n` +
-      `📝 *${quiz.title}*\n` +
-      `${quiz.description}\n\n` +
+      `📝 *${escapeMarkdown(quiz.title)}*\n` +
+      `${escapeMarkdown(quiz.description)}\n\n` +
       `🔗 Link: ${link}\n\n` +
       `_Anyone can click this link to start the quiz!_`,
       { parse_mode: 'Markdown' }
