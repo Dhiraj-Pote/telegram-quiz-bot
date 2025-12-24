@@ -95,6 +95,23 @@ function setupCommands(bot) {
     clearUserData(targetUsername, quizId);
     bot.sendMessage(chatId, `✅ Cleared @${targetUsername} from ${quizId}`);
   });
+  
+  // Admin: /resetquiz - Clear your current active quiz session
+  bot.onText(/\/resetquiz/, async (msg) => {
+    const chatId = msg.chat.id;
+    const userId = msg.from.id;
+    const username = msg.from.username || '';
+    const isAdmin = ADMIN_USERNAMES.includes(username.toLowerCase());
+
+    if (!isAdmin) {
+      bot.sendMessage(chatId, '⛔ Admin only command.');
+      return;
+    }
+
+    const { deleteQuizState } = require('./database');
+    deleteQuizState(userId);
+    bot.sendMessage(chatId, `✅ Your active quiz session has been reset. You can start a new quiz now.`);
+  });
 
   // Admin: /listusers quiz_id
   bot.onText(/\/listusers(?:\s+(.+))?/, async (msg, match) => {

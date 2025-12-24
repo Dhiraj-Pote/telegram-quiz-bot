@@ -13,6 +13,11 @@ function setupCallbacks(bot) {
     const data = query.data;
     const username = query.from.username || '';
     const isAdmin = ADMIN_USERNAMES.includes(username.toLowerCase());
+    
+    // Debug logging for admin check
+    if (data.startsWith('answer_')) {
+      console.log(`Answer callback - Username: ${username}, IsAdmin: ${isAdmin}, AdminList: ${ADMIN_USERNAMES.join(',')}`);
+    }
 
     try {
       if (data === 'browse_quizzes') {
