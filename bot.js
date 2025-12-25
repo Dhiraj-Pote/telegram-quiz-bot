@@ -514,6 +514,17 @@ async function handleAnswer(chatId, userId, messageId, quizDate, questionIndex, 
   const questions = getQuizQuestions(quizDate);
   const question = questions[questionIndex];
   const state = await getQuizState(userId);
+  
+  // Check if state exists (user might have lost session)
+  if (!state) {
+    await bot.editMessageText('⚠️ Quiz session expired. Please use /start to begin a new quiz.', {
+      chat_id: chatId,
+      message_id: messageId
+    });
+    clearTimer(userId);
+    return;
+  }
+  
   const isCorrect = answerIndex === question.correct;
 
   // Clear both timeout and interval when answer is selected
@@ -549,6 +560,16 @@ async function handleTimeout(chatId, userId, messageId, quizDate, questionIndex)
   const questions = getQuizQuestions(quizDate);
   const question = questions[questionIndex];
   const state = await getQuizState(userId);
+  
+  // Check if state exists (user might have lost session)
+  if (!state) {
+    await bot.editMessageText('⚠️ Quiz session expired. Please use /start to begin a new quiz.', {
+      chat_id: chatId,
+      message_id: messageId
+    });
+    clearTimer(userId);
+    return;
+  }
 
   const userAnswers = JSON.parse(state.user_answers);
   userAnswers.push(null);
