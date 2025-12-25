@@ -65,6 +65,36 @@ const DAILY_QUIZZES = {
           "He surrendered out of respect for the Lord's bravery."
         ],
         correct: 2 // C
+      },
+      {
+        question: "How was Hiraṇyākṣa finally killed by the Lord?",
+        options: [
+          "By the striking of His mace",
+          "By the Sudarśana Cakra",
+          "By a simple slap at the root of the ear",
+          "By the crushing of His forefeet"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "How did the Lord feel the impact of the demon's hard fist?",
+        options: [
+          "Like a mountain struck by a thunderbolt",
+          "Like an elephant struck by flowers",
+          "It caused Him great pain",
+          "He felt a slight scratch on His chest"
+        ],
+        correct: 1 // B: Like an elephant struck by a wreath of flowers
+      },
+      {
+        question: "What distinguishes the Lord from the inhabitants of Vaikuṇṭha?",
+        options: [
+          "They have distinct bodily form",
+          "His wearing of a golden Mukuta",
+          "His wearing of a peacock feather",
+          "The Śrīvatsa mark on His chest"
+        ],
+        correct: 3 // D: The Śrīvatsa mark
       }
     ],
     validUntil: '2025-12-27' // 2 days validity
