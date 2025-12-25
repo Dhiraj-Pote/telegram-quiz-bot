@@ -239,10 +239,10 @@ bot.onText(/\/start/, async (msg) => {
   const validUntil = DAILY_QUIZZES[quizDate].validUntil;
   const showStartButton = !attempted || isAdmin;
 
-  const welcomeMessage = `🎯 *Śrīmad Bhāgavatam Quiz\n (Canto 3 chapter 18)!*\n\n` +
+  const welcomeMessage = `🎯 *Śrīmad Bhāgavatam Quiz\n (Canto 3 chapter 19)!*\n\n` +
 
     `⏰ Valid Until: ${validUntil}\n\n` +
-    `Please read SB (Canto 3 chapter 18)\nbefore attempting this quiz\n\n` +
+    `Please read SB (Canto 3 chapter 19)\nbefore attempting this quiz\n\n` +
 
     `${attempted && !isAdmin ? '✅ You have already taken this quiz!\nYou can review your answers.' : '✨ Ready to begin?'}`;
 
