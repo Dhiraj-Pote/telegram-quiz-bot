@@ -36,6 +36,29 @@ const DAILY_QUIZZES = {
         ],
         correct: 1 // B
       },
+
+
+ {
+        question: "How was Hiraṇyākṣa finally killed by the Lord?",
+        options: [
+          "By the striking of His mace",
+          "By the Sudarśana Cakra",
+          "By a simple slap at the root of the ear",
+          "By the crushing of His forefeet"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "How did the Lord feel the impact of the demon's hard fist?",
+        options: [
+          "Like a mountain struck by a thunderbolt",
+          "Like an elephant struck by flowers",
+          "It caused Him great pain",
+          "He felt a slight scratch on His chest"
+        ],
+        correct: 1 // B: Like an elephant struck by a wreath of flowers
+      },
+
       {
         question: "What did Hiraṇyākṣa do when all his weapons were broken and his magic failed?",
         options: [
@@ -66,26 +89,7 @@ const DAILY_QUIZZES = {
         ],
         correct: 2 // C
       },
-      {
-        question: "How was Hiraṇyākṣa finally killed by the Lord?",
-        options: [
-          "By the striking of His mace",
-          "By the Sudarśana Cakra",
-          "By a simple slap at the root of the ear",
-          "By the crushing of His forefeet"
-        ],
-        correct: 2 // C
-      },
-      {
-        question: "How did the Lord feel the impact of the demon's hard fist?",
-        options: [
-          "Like a mountain struck by a thunderbolt",
-          "Like an elephant struck by flowers",
-          "It caused Him great pain",
-          "He felt a slight scratch on His chest"
-        ],
-        correct: 1 // B: Like an elephant struck by a wreath of flowers
-      },
+    
       {
         question: "What distinguishes the Lord from the inhabitants of Vaikuṇṭha?",
         options: [
