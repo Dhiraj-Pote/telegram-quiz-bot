@@ -14,38 +14,63 @@ const ADMIN_USERNAME = 'ys16108';
 // ============= DAILY QUIZ QUESTIONS =============
 // Change these questions daily! Format: YYYY-MM-DD
 const DAILY_QUIZZES = {
-  '2025-12-24': {
-    questions: [
+  '2025-12-25': {
+ questions: [
       {
-        question: "Who is described as the most independent demigod of the universe who came to witness the fight?",
-        options: ["Lord Shiva", "Lord Brahma", "Indra", "Manu"],
-        correct: 1
+        question: "What spiritual benefit is gained by hearing or telling this story?",
+        options: [
+          "They will gain the physical strength of a boar.",
+          "They will never face any financial loss.",
+          "They are freed from even the sin of killing a brahmana and gain Vaikuṇṭha.",
+          "They will become the next Lord Brahma."
+        ],
+        correct: 2 // C
       },
       {
-        question: "How did Lord Varaha ensure the safety of the Earth before engaging in the final duel?",
-        options: ["He placed her on the water and empowered her to float", "He hid the Earth behind the sun", "He handed the Earth over to Lord Brahma", "He swallowed the Earth to keep her safe inside His body"],
-        correct: 0
+        question: "Why did Brahmā call Hiraṇyākṣa 'blessed'?",
+        options: [
+          "Because his brother would eventually avenge him.",
+          "Because he died while seeing the face of the Supreme Lord.",
+          "Because he was the strongest demon to ever live.",
+          "Because he was granted a place in the sun planet."
+        ],
+        correct: 1 // B
       },
       {
-        question: "Why did Lord Brahma urge Lord Varaha to kill the demon quickly without 'playing' with him?",
-        options: ["Because the 'demoniac hour' (evening) was fast approaching", "Because the Earth was starting to sink again", "Because the demon was gaining strength from the sun", "Because the demigods were about to lose their immortality"],
-        correct: 0
+        question: "What did Hiraṇyākṣa do when all his weapons were broken and his magic failed?",
+        options: [
+          "He tried to crush the Lord in embrace.",
+          "He begged for a boon of immortality.",
+          "He dove back into the depths of the ocean to hide.",
+          "He threw a mountain at the Lord."
+        ],
+        correct: 0 // A
       },
       {
-        question: "Did the demon Hiranyaksha glorify the Lord with his words, despite his wanting to deride Him?",
-        options: ["True", "False"],
-        correct: 0
+        question: "How did the Lord bring an end to all the demon's mystic conjuring tricks?",
+        options: [
+          "By drinking the rain of blood and pus.",
+          "By blowing His conchshell, the Pāñcajanya.",
+          "By striking the ground with His hoof.",
+          "By casting His Sudarśana Cakra."
+        ],
+        correct: 3 // D
       },
       {
-        question: "Who refuses liberation even if it is offered to them?",
-        options: ["Impersonalists", "Asuras", "Karmis", "Devotees of the Lord"],
-        correct: 3
+        question: "How did Hiraṇyākṣa react when the Lord stood before him unarmed after losing His mace?",
+        options: [
+          "He laughed and tried to grab the Earth.",
+          "He immediately struck the Lord's chest.",
+          "He respected the laws of combat and did not strike.",
+          "He surrendered out of respect for the Lord's bravery."
+        ],
+        correct: 2 // C
       }
     ],
-    validUntil: '2025-12-26' // 2 days validity
+    validUntil: '2025-12-27' // 2 days validity
   },
   // Add new quiz for next day
-  '2025-12-26': {
+  '2025-12-28': {
     questions: [
       {
         question: "What is the smallest country in the world?",
