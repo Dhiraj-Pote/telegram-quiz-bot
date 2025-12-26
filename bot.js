@@ -6,7 +6,8 @@ const Database = require('better-sqlite3');
 
 // ============= CONFIGURATION =============
 const BOT_TOKEN = '8590540828:AAFDdhQzqP3_LQLcTLPNZbtOe8s2Mb8A3DU';
-const db = new Database('./quiz.db');
+const DATABASE_PATH = process.env.DATABASE_PATH || './quiz.db';
+const db = new Database(DATABASE_PATH);
 
 // Admin username (can attempt quiz unlimited times)
 const ADMIN_USERNAME = 'ys16108';
@@ -183,6 +184,41 @@ db.exec(`CREATE TABLE IF NOT EXISTS active_quizzes (
   question_start_time INTEGER,
   user_answers TEXT
 )`);
+
+// Restore leaderboard data if database is empty (first deployment to volume)
+function restoreLeaderboardIfNeeded() {
+  const quizDate = '2025-12-25';
+  const existingData = db.prepare('SELECT COUNT(*) as count FROM results WHERE quiz_date = ?').get(quizDate);
+  
+  if (existingData.count === 0) {
+    console.log('📊 Restoring leaderboard data...');
+    
+    const leaderboardData = [
+      { username: 'ys16108', first_name: 'Ys', score: 7, total_time: 94, user_id: 1001 },
+      { username: 'shubham', first_name: 'Shubham', score: 7, total_time: 72, user_id: 1002 },
+      { username: 'dhiraj', first_name: 'Dhiraj', score: 7, total_time: 180, user_id: 1003 },
+      { username: 'ashish', first_name: 'Ashish', score: 5, total_time: 115, user_id: 1004 }
+    ];
+    
+    const insertResult = db.prepare(
+      'INSERT INTO results (user_id, quiz_date, username, first_name, score, total_time, user_answers) VALUES (?, ?, ?, ?, ?, ?, ?)'
+    );
+    
+    const insertUser = db.prepare(
+      'INSERT INTO users (user_id, quiz_date, username, first_name, has_attempted) VALUES (?, ?, ?, ?, 1)'
+    );
+    
+    leaderboardData.forEach(entry => {
+      const userAnswers = JSON.stringify(Array(8).fill(0));
+      insertResult.run(entry.user_id, quizDate, entry.username, entry.first_name, entry.score, entry.total_time, userAnswers);
+      insertUser.run(entry.user_id, quizDate, entry.username, entry.first_name);
+    });
+    
+    console.log('✅ Leaderboard data restored!');
+  }
+}
+
+restoreLeaderboardIfNeeded();
 
 // ============= BOT INITIALIZATION =============
 const bot = new TelegramBot(BOT_TOKEN, { 
