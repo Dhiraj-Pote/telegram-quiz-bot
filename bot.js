@@ -185,7 +185,15 @@ db.exec(`CREATE TABLE IF NOT EXISTS active_quizzes (
 )`);
 
 // ============= BOT INITIALIZATION =============
-const bot = new TelegramBot(BOT_TOKEN, { polling: true });
+const bot = new TelegramBot(BOT_TOKEN, { 
+  polling: {
+    interval: 300,
+    autoStart: true,
+    params: {
+      timeout: 10
+    }
+  }
+});
 const userTimers = {};
 
 // ============= HELPER FUNCTIONS =============
@@ -694,7 +702,27 @@ async function showLeaderboard(chatId, quizDate) {
 
 // ============= ERROR HANDLING =============
 bot.on('polling_error', (error) => {
-  console.log('Polling error:', error);
+  console.log('Polling error:', error.code, error.message);
+  
+  // Don't crash on network errors, let it retry
+  if (error.code === 'EFATAL' || error.code === 'ETELEGRAM') {
+    console.log('Network error detected, bot will retry automatically...');
+  }
+});
+
+// Handle process termination gracefully
+process.once('SIGINT', () => {
+  console.log('Bot stopping...');
+  bot.stopPolling();
+  db.close();
+  process.exit(0);
+});
+
+process.once('SIGTERM', () => {
+  console.log('Bot stopping...');
+  bot.stopPolling();
+  db.close();
+  process.exit(0);
 });
 
 console.log('🤖 Daily Quiz Bot is running...');
