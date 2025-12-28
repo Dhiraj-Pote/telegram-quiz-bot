@@ -9,6 +9,15 @@ const BOT_TOKEN = '8590540828:AAFDdhQzqP3_LQLcTLPNZbtOe8s2Mb8A3DU';
 const DATABASE_PATH = process.env.DATABASE_PATH || './quiz.db';
 const db = new Database(DATABASE_PATH);
 
+// SQLite optimizations for better performance and reliability
+db.pragma('journal_mode = WAL'); // Write-Ahead Logging for better concurrency
+db.pragma('synchronous = NORMAL'); // Balance between safety and speed
+db.pragma('foreign_keys = ON'); // Enable foreign key constraints
+db.pragma('temp_store = MEMORY'); // Store temp tables in memory
+
+console.log('📁 Database path:', DATABASE_PATH);
+console.log('✅ SQLite optimizations applied');
+
 // Admin username (can attempt quiz unlimited times)
 const ADMIN_USERNAME = 'ys16108';
 
@@ -102,7 +111,7 @@ const DAILY_QUIZZES = {
         correct: 3 // D: The Śrīvatsa mark
       }
     ],
-    validUntil: '2025-12-27' // 2 days validity
+    validUntil: '2025-12-29' // 2 days validity
   },
   // Add new quiz for next day
   '2025-12-28': {
@@ -233,58 +242,55 @@ const bot = new TelegramBot(BOT_TOKEN, {
 const userTimers = {};
 
 // ============= HELPER FUNCTIONS =============
+// Prepare statements once for better performance
+const preparedStatements = {
+  hasUserAttempted: db.prepare('SELECT has_attempted FROM users WHERE user_id = ? AND quiz_date = ?'),
+  markUserAttempted: db.prepare('INSERT OR REPLACE INTO users (user_id, quiz_date, username, first_name, has_attempted) VALUES (?, ?, ?, ?, 1)'),
+  saveResult: db.prepare('INSERT INTO results (user_id, quiz_date, username, first_name, score, total_time, user_answers) VALUES (?, ?, ?, ?, ?, ?, ?)'),
+  getUserResult: db.prepare('SELECT * FROM results WHERE user_id = ? AND quiz_date = ?'),
+  getLeaderboard: db.prepare('SELECT username, first_name, score, total_time FROM results WHERE quiz_date = ? ORDER BY score DESC, total_time ASC LIMIT 10'),
+  startQuiz: db.prepare('INSERT OR REPLACE INTO active_quizzes (user_id, quiz_date, current_question, score, start_time, question_start_time, user_answers) VALUES (?, ?, 0, 0, ?, ?, ?)'),
+  getQuizState: db.prepare('SELECT * FROM active_quizzes WHERE user_id = ?'),
+  updateQuizState: db.prepare('UPDATE active_quizzes SET current_question = ?, score = ?, question_start_time = ?, user_answers = ? WHERE user_id = ?'),
+  deleteQuizState: db.prepare('DELETE FROM active_quizzes WHERE user_id = ?')
+};
+
 function hasUserAttempted(userId, quizDate) {
-  const row = db.prepare('SELECT has_attempted FROM users WHERE user_id = ? AND quiz_date = ?')
-    .get(userId, quizDate);
+  const row = preparedStatements.hasUserAttempted.get(userId, quizDate);
   return row && row.has_attempted === 1;
 }
 
 function markUserAttempted(userId, quizDate, username, firstName) {
-  db.prepare(
-    'INSERT OR REPLACE INTO users (user_id, quiz_date, username, first_name, has_attempted) VALUES (?, ?, ?, ?, 1)'
-  ).run(userId, quizDate, username, firstName);
+  preparedStatements.markUserAttempted.run(userId, quizDate, username, firstName);
 }
 
 function saveResult(userId, quizDate, username, firstName, score, totalTime, userAnswers) {
-  db.prepare(
-    'INSERT INTO results (user_id, quiz_date, username, first_name, score, total_time, user_answers) VALUES (?, ?, ?, ?, ?, ?, ?)'
-  ).run(userId, quizDate, username, firstName, score, totalTime, JSON.stringify(userAnswers));
+  preparedStatements.saveResult.run(userId, quizDate, username, firstName, score, totalTime, JSON.stringify(userAnswers));
 }
 
 function getUserResult(userId, quizDate) {
-  return db.prepare('SELECT * FROM results WHERE user_id = ? AND quiz_date = ?')
-    .get(userId, quizDate);
+  return preparedStatements.getUserResult.get(userId, quizDate);
 }
 
 function getLeaderboard(quizDate) {
-  return db.prepare(
-    `SELECT username, first_name, score, total_time 
-     FROM results 
-     WHERE quiz_date = ?
-     ORDER BY score DESC, total_time ASC 
-     LIMIT 10`
-  ).all(quizDate);
+  return preparedStatements.getLeaderboard.all(quizDate);
 }
 
 function startQuiz(userId, quizDate) {
   const now = Date.now();
-  db.prepare(
-    'INSERT OR REPLACE INTO active_quizzes (user_id, quiz_date, current_question, score, start_time, question_start_time, user_answers) VALUES (?, ?, 0, 0, ?, ?, ?)'
-  ).run(userId, quizDate, now, now, JSON.stringify([]));
+  preparedStatements.startQuiz.run(userId, quizDate, now, now, JSON.stringify([]));
 }
 
 function getQuizState(userId) {
-  return db.prepare('SELECT * FROM active_quizzes WHERE user_id = ?').get(userId);
+  return preparedStatements.getQuizState.get(userId);
 }
 
 function updateQuizState(userId, currentQuestion, score, questionStartTime, userAnswers) {
-  db.prepare(
-    'UPDATE active_quizzes SET current_question = ?, score = ?, question_start_time = ?, user_answers = ? WHERE user_id = ?'
-  ).run(currentQuestion, score, questionStartTime, JSON.stringify(userAnswers), userId);
+  preparedStatements.updateQuizState.run(currentQuestion, score, questionStartTime, JSON.stringify(userAnswers), userId);
 }
 
 function deleteQuizState(userId) {
-  db.prepare('DELETE FROM active_quizzes WHERE user_id = ?').run(userId);
+  preparedStatements.deleteQuizState.run(userId);
 }
 
 function clearTimer(userId) {
