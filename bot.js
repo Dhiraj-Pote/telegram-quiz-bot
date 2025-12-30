@@ -111,7 +111,7 @@ const DAILY_QUIZZES = {
         correct: 3 // D: The Śrīvatsa mark
       }
     ],    
-    validUntil: '2025-12-29' // 2 days validity
+    validUntil: '2025-12-30' // 2 days validity
   },
   // Add new quiz for next day
   '2025-12-31': {
