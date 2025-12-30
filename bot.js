@@ -111,19 +111,91 @@ const DAILY_QUIZZES = {
         correct: 3 // D: The Śrīvatsa mark
       }
     ],    
-    validUntil: '2025-12-30' // 2 days validity
+    validUntil: '2025-12-27' // 2 days validity
   },
   // Add new quiz for next day
-  '2025-12-31': {
+  '2025-12-30': {
     questions: [
       {
-        question: "What is the smallest country in the world?",
-        options: ["Monaco", "Vatican City", "San Marino", "Liechtenstein"],
-        correct: 1
+        question: "What happened to Brahmā's body when his sons, the Kumāras, refused to follow his orders?",
+        options: [
+          "He became filled with a terrible anger that he tried to suppress.",
+          "He immediately gave up his life and took a new body.",
+          "He laughed at their determination.",
+          "He fell into a deep sleep out of disappointment."
+        ],
+        correct: 0 // A
       },
-      // Add 4 more questions...
+      {
+        question: "Who was born from between the eyebrows of Brahmā as a result of his suppressed anger?",
+        options: [
+          "Lord Rudra (Śiva)",
+          "Nārada Muni",
+          "Dakṣa",
+          "Kardama Muni"
+        ],
+        correct: 0 // A
+      },
+      {
+        question: "Which group of beings was created from Brahmā's 'shining' and 'jovial' form, associated with the daytime?",
+        options: [
+          "The ghosts and spirits.",
+          "The Demigods (Devas).",
+          "The Rakshasas (Man-eaters).",
+          "The Pitṛs (Ancestors)."
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "From which part of Brahmā were the sages (like Marīci, Atri, and Vasiṣṭha) born?",
+        options: [
+          "From various limbs and parts of his body.",
+          "From his breath (Prāna).",
+          "From his hair.",
+          "From his tears."
+        ],
+        correct: 0 // A
+      },
+      {
+        question: "When the Yakṣas and Rākṣasas were born, what was their immediate reaction toward Brahma?",
+        options: [
+          "They offered him prayers and flowers.",
+          "They ran to Eat him out of extreme hunger and thirst.",
+          "They asked him for a kingdom to rule.",
+          "They immediately began performing severe penance."
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "What entities were created from the hair that dropped from Brahma's body while he was crawling in a frustrated state?",
+        options: [
+          "Birds and flying insects.",
+          "Ferocious snakes and cobras (Nāgas).",
+          "The forest trees and medicinal herbs.",
+          "Small animals like rabbits and deer."
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "From which part of Brahma's body were the ghosts (Bhūtas) and fiends (Piśācas) evolved?",
+        options: [
+          "From his sloth and laziness.",
+          "From his laughter.",
+          "From his shadow.",
+          "From his fingernails."
+        ],
+        correct: 0 // A
+      },
+      {
+        question: "The more one is free from the desire for sex, the more he is promoted to the level of the demigods.",
+        options: [
+          "True",
+          "False"
+        ],
+        correct: 0 // True
+      }
     ],
-    validUntil: '2025-12-30'
+    validUntil: '2026-01-02'
   }
 };
 
