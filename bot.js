@@ -204,26 +204,28 @@ const QUESTION_TIME_LIMIT = 60; // seconds
 // ============= HELPER: Get Current Quiz =============
 function getCurrentQuizDate() {
   const today = new Date().toISOString().split('T')[0];
+  const now = new Date();
+  now.setHours(0, 0, 0, 0); // Reset to start of day for comparison
   
   // Check if today's quiz exists and is valid
   if (DAILY_QUIZZES[today]) {
     const validUntil = new Date(DAILY_QUIZZES[today].validUntil);
-    const now = new Date();
+    validUntil.setHours(23, 59, 59, 999); // Set to end of day
     if (now <= validUntil) {
       return today;
     }
   }
   
-  // Check for valid quiz from previous day
-  const yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
-  const yesterdayStr = yesterday.toISOString().split('T')[0];
-  
-  if (DAILY_QUIZZES[yesterdayStr]) {
-    const validUntil = new Date(DAILY_QUIZZES[yesterdayStr].validUntil);
-    const now = new Date();
-    if (now <= validUntil) {
-      return yesterdayStr;
+  // Check all quizzes to find one that's still valid
+  for (const quizDate in DAILY_QUIZZES) {
+    const validUntil = new Date(DAILY_QUIZZES[quizDate].validUntil);
+    validUntil.setHours(23, 59, 59, 999); // Set to end of day
+    const quizDateObj = new Date(quizDate);
+    quizDateObj.setHours(0, 0, 0, 0);
+    
+    // Quiz is valid if we're between quiz date and validUntil date
+    if (quizDateObj <= now && now <= validUntil) {
+      return quizDate;
     }
   }
   
