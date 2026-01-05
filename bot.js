@@ -687,13 +687,21 @@ async function sendQuestion(chatId, userId, quizDate, questionIndex) {
 
   const question = questions[questionIndex];
 
-  const questionText = `📝 *Question ${questionIndex + 1}/${questions.length}*\n\n` +
-    `${question.question}\n\n` +
-    `⏱️ Time: 60 seconds`;
+  // Build question text with labeled options
+  let questionText = `📝 *Question ${questionIndex + 1}/${questions.length}*\n\n${question.question}\n\n`;
+  
+  // Add options with labels (A, B, C, D)
+  const optionLabels = ['A', 'B', 'C', 'D', 'E', 'F'];
+  question.options.forEach((option, index) => {
+    questionText += `${optionLabels[index]}. ${option}\n\n`;
+  });
+  
+  questionText += `⏱️ Time: 60 seconds`;
 
+  // Create simple labeled buttons
   const keyboard = {
     inline_keyboard: question.options.map((option, index) => [
-      { text: option, callback_data: `answer_${questionIndex}_${index}` }
+      { text: optionLabels[index], callback_data: `answer_${questionIndex}_${index}` }
     ])
   };
 
@@ -715,9 +723,15 @@ async function sendQuestion(chatId, userId, quizDate, questionIndex) {
       return;
     }
 
-    const updatedText = `📝 *Question ${questionIndex + 1}/${questions.length}*\n\n` +
-      `${question.question}\n\n` +
-      `⏱️ Time: ${remaining} seconds`;
+    let updatedText = `📝 *Question ${questionIndex + 1}/${questions.length}*\n\n${question.question}\n\n`;
+    
+    // Add options with labels
+    const optionLabels = ['A', 'B', 'C', 'D', 'E', 'F'];
+    question.options.forEach((option, index) => {
+      updatedText += `${optionLabels[index]}. ${option}\n\n`;
+    });
+    
+    updatedText += `⏱️ Time: ${remaining} seconds`;
 
     try {
       await bot.editMessageText(updatedText, {
