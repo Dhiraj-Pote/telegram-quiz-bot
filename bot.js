@@ -687,21 +687,14 @@ async function sendQuestion(chatId, userId, quizDate, questionIndex) {
 
   const question = questions[questionIndex];
 
-  // Build question text with labeled options
+  // Build question text
   let questionText = `📝 *Question ${questionIndex + 1}/${questions.length}*\n\n${question.question}\n\n`;
-  
-  // Add options with labels (A, B, C, D)
-  const optionLabels = ['A', 'B', 'C', 'D', 'E', 'F'];
-  question.options.forEach((option, index) => {
-    questionText += `${optionLabels[index]}. ${option}\n\n`;
-  });
-  
   questionText += `⏱️ Time: 60 seconds`;
 
-  // Create simple labeled buttons
+  // Create buttons with full option text, stacked vertically for full width
   const keyboard = {
     inline_keyboard: question.options.map((option, index) => [
-      { text: optionLabels[index], callback_data: `answer_${questionIndex}_${index}` }
+      { text: option, callback_data: `answer_${questionIndex}_${index}` }
     ])
   };
 
@@ -724,13 +717,6 @@ async function sendQuestion(chatId, userId, quizDate, questionIndex) {
     }
 
     let updatedText = `📝 *Question ${questionIndex + 1}/${questions.length}*\n\n${question.question}\n\n`;
-    
-    // Add options with labels
-    const optionLabels = ['A', 'B', 'C', 'D', 'E', 'F'];
-    question.options.forEach((option, index) => {
-      updatedText += `${optionLabels[index]}. ${option}\n\n`;
-    });
-    
     updatedText += `⏱️ Time: ${remaining} seconds`;
 
     try {
