@@ -29,20 +29,20 @@ const DAILY_QUIZZES = {
       {
         question: "What spiritual benefit is gained by hearing or telling this story?",
         options: [
-          "They will gain the physical strength of a boar.",
-          "They will never face any financial loss.",
-          "They are freed from even the sin of killing a brahmana and gain Vaikuṇṭha.",
-          "They will become the next Lord Brahma."
+          "Gain physical strength of a boar",
+          "Never face financial loss",
+          "Freed from brahmana-killing sin, gain Vaikuṇṭha",
+          "Become the next Lord Brahma"
         ],
         correct: 2 // C
       },
       {
         question: "Why did Brahmā call Hiraṇyākṣa 'blessed'?",
         options: [
-          "Because his brother would eventually avenge him.",
-          "Because he died while seeing the face of the Supreme Lord.",
-          "Because he was the strongest demon to ever live.",
-          "Because he was granted a place in the sun planet."
+          "His brother would avenge him",
+          "He died seeing the Supreme Lord's face",
+          "He was the strongest demon ever",
+          "He was granted a place in sun planet"
         ],
         correct: 1 // B
       },
@@ -51,20 +51,20 @@ const DAILY_QUIZZES = {
  {
         question: "How was Hiraṇyākṣa finally killed by the Lord?",
         options: [
-          "By the striking of His mace",
-          "By the Sudarśana Cakra",
-          "By a simple slap at the root of the ear",
-          "By the crushing of His forefeet"
+          "Striking of His mace",
+          "Sudarśana Cakra",
+          "Slap at the root of the ear",
+          "Crushing of His forefeet"
         ],
         correct: 2 // C
       },
       {
         question: "How did the Lord feel the impact of the demon's hard fist?",
         options: [
-          "Like a mountain struck by a thunderbolt",
-          "Like an elephant struck by flowers",
-          "It caused Him great pain",
-          "He felt a slight scratch on His chest"
+          "Mountain struck by thunderbolt",
+          "Elephant struck by flowers",
+          "Caused Him great pain",
+          "Slight scratch on His chest"
         ],
         correct: 1 // B: Like an elephant struck by a wreath of flowers
       },
@@ -72,30 +72,30 @@ const DAILY_QUIZZES = {
       {
         question: "What did Hiraṇyākṣa do when all his weapons were broken and his magic failed?",
         options: [
-          "He tried to crush the Lord in embrace.",
-          "He begged for a boon of immortality.",
-          "He dove back into the depths of the ocean to hide.",
-          "He threw a mountain at the Lord."
+          "Tried to crush the Lord in embrace",
+          "Begged for immortality boon",
+          "Dove into ocean depths to hide",
+          "Threw a mountain at the Lord"
         ],
         correct: 0 // A
       },
       {
         question: "How did the Lord bring an end to all the demon's mystic conjuring tricks?",
         options: [
-          "By drinking the rain of blood and pus.",
-          "By blowing His conchshell, the Pāñcajanya.",
-          "By striking the ground with His hoof.",
-          "By casting His Sudarśana Cakra."
+          "Drinking rain of blood and pus",
+          "Blowing His conchshell Pāñcajanya",
+          "Striking ground with His hoof",
+          "Casting His Sudarśana Cakra"
         ],
         correct: 3 // D
       },
       {
         question: "How did Hiraṇyākṣa react when the Lord stood before him unarmed after losing His mace?",
         options: [
-          "He laughed and tried to grab the Earth.",
-          "He immediately struck the Lord's chest.",
-          "He respected the laws of combat and did not strike.",
-          "He surrendered out of respect for the Lord's bravery."
+          "Laughed and tried to grab Earth",
+          "Immediately struck Lord's chest",
+          "Respected combat laws, did not strike",
+          "Surrendered respecting Lord's bravery"
         ],
         correct: 2 // C
       },
@@ -103,10 +103,10 @@ const DAILY_QUIZZES = {
       {
         question: "What distinguishes the Lord from the inhabitants of Vaikuṇṭha?",
         options: [
-          "They have distinct bodily form",
-          "His wearing of a golden Mukuta",
-          "His wearing of a peacock feather",
-          "The Śrīvatsa mark on His chest"
+          "Distinct bodily form",
+          "Golden Mukuta crown",
+          "Peacock feather",
+          "Śrīvatsa mark on His chest"
         ],
         correct: 3 // D: The Śrīvatsa mark
       }
@@ -119,10 +119,10 @@ const DAILY_QUIZZES = {
       {
         question: "What happened to Brahmā's body when his sons, the Kumāras, refused to follow his orders?",
         options: [
-          "He became filled with a terrible anger that he tried to suppress.",
-          "He immediately gave up his life and took a new body.",
-          "He laughed at their determination.",
-          "He fell into a deep sleep out of disappointment."
+          "Filled with terrible anger he tried to suppress",
+          "Gave up his life and took new body",
+          "Laughed at their determination",
+          "Fell into deep sleep from disappointment"
         ],
         correct: 0 // A
       },
@@ -139,50 +139,50 @@ const DAILY_QUIZZES = {
       {
         question: "Which group of beings was created from Brahmā's 'shining' and 'jovial' form, associated with the daytime?",
         options: [
-          "The ghosts and spirits.",
-          "The Demigods (Devas).",
-          "The Rakshasas (Man-eaters).",
-          "The Pitṛs (Ancestors)."
+          "Ghosts and spirits",
+          "Demigods (Devas)",
+          "Rakshasas (Man-eaters)",
+          "Pitṛs (Ancestors)"
         ],
         correct: 1 // B
       },
       {
         question: "From which part of Brahmā were the sages (like Marīci, Atri, and Vasiṣṭha) born?",
         options: [
-          "From various limbs and parts of his body.",
-          "From his breath (Prāna).",
-          "From his hair.",
-          "From his tears."
+          "Various limbs and parts of his body",
+          "His breath (Prāna)",
+          "His hair",
+          "His tears"
         ],
         correct: 0 // A
       },
       {
         question: "When the Yakṣas and Rākṣasas were born, what was their immediate reaction toward Brahma?",
         options: [
-          "They offered him prayers and flowers.",
-          "They ran to Eat him out of extreme hunger and thirst.",
-          "They asked him for a kingdom to rule.",
-          "They immediately began performing severe penance."
+          "Offered prayers and flowers",
+          "Ran to eat him from hunger and thirst",
+          "Asked for a kingdom to rule",
+          "Began performing severe penance"
         ],
         correct: 1 // B
       },
       {
         question: "What entities were created from the hair that dropped from Brahma's body while he was crawling in a frustrated state?",
         options: [
-          "Birds and flying insects.",
-          "Ferocious snakes and cobras (Nāgas).",
-          "The forest trees and medicinal herbs.",
-          "Small animals like rabbits and deer."
+          "Birds and flying insects",
+          "Ferocious snakes and cobras (Nāgas)",
+          "Forest trees and medicinal herbs",
+          "Small animals like rabbits and deer"
         ],
         correct: 1 // B
       },
       {
         question: "From which part of Brahma's body were the ghosts (Bhūtas) and fiends (Piśācas) evolved?",
         options: [
-          "From his sloth and laziness.",
-          "From his laughter.",
-          "From his shadow.",
-          "From his fingernails."
+          "His sloth and laziness",
+          "His laughter",
+          "His shadow",
+          "His fingernails"
         ],
         correct: 0 // A
       },
@@ -203,60 +203,60 @@ const DAILY_QUIZZES = {
       {
         question: "Why did Kardama Muni perform penance on the bank of the Sarasvati for ten thousand years?",
         options: [
-          "To gain mystic powers to defeat the demigods.",
-          "To escape the responsibilities of the material world.",
-          "To follow the command of Lord Brahma to increase progeny.",
-          "To find a way to become the King of the universe."
+          "Gain mystic powers to defeat demigods",
+          "Escape material world responsibilities",
+          "Follow Brahma's command to increase progeny",
+          "Become King of the universe"
         ],
         correct: 2 // C
       },
       {
         question: "What is the primary spiritual guideline for selecting a spouse to ensure a stable marriage?",
         options: [
-          "One should be enamored by external beauty and attractive features.",
-          "One should prioritize high social status and financial wealth.",
-          "One should select a partner of like disposition and spiritual compatibility.",
-          "One should choose based on the recommendation of secular friends."
+          "Be enamored by external beauty",
+          "Prioritize social status and wealth",
+          "Select partner of like disposition and spiritual compatibility",
+          "Choose based on secular friends' recommendation"
         ],
         correct: 2 // C
       },
       {
         question: "According to SB 12th Canto, what will be the superficial basis of marriage in Kali-yuga?",
         options: [
-          "Consideration of sex life and physical attraction.",
-          "Deep philosophical and religious agreement.",
-          "The mutual desire to serve the Supreme Lord.",
-          "Strict adherence to Vedic family lineages."
+          "Sex life and physical attraction",
+          "Deep philosophical and religious agreement",
+          "Mutual desire to serve Supreme Lord",
+          "Strict adherence to Vedic lineages"
         ],
         correct: 0 // A
       },
       {
         question: "Why did Kardama Muni worship the Supreme Lord for a wife instead of the demigoddess Uma?",
         options: [
-          "Because he was unaware that Uma grants good wives.",
-          "Because the Bhagavatam recommends worshipping the Lord whether one has desires or not.",
-          "Because he wanted to prove he was a better yogi than others.",
-          "Because he was strictly forbidden from speaking to demigods."
+          "Unaware that Uma grants good wives",
+          "Bhagavatam recommends worshipping Lord with or without desires",
+          "Wanted to prove he was better yogi",
+          "Strictly forbidden from speaking to demigods"
         ],
         correct: 1 // B
       },
       {
         question: "How was the sacred Bindu-sarovara formed by the Supreme Personality of Godhead?",
         options: [
-          "By the striking of His lotus feet upon the earth.",
-          "By the accumulation of sacrificial offerings.",
-          "From the Lord's tears of compassion for His devotee Kardama.",
-          "By the melting of the Himalayan glaciers."
+          "Striking His lotus feet upon earth",
+          "Accumulation of sacrificial offerings",
+          "Lord's tears of compassion for Kardama",
+          "Melting of Himalayan glaciers"
         ],
         correct: 2 // C
       },
       {
         question: "What does Kardama Muni identify as the only 'sturdy boat' to cross the ocean of material existence?",
         options: [
-          "The accumulation of vast empirical and Vedic knowledge.",
-          "The shelter and service of the Lord's lotus feet.",
-          "The performance of severe physical austerities.",
-          "The strict adherence to social and political duties."
+          "Vast empirical and Vedic knowledge",
+          "Shelter and service of Lord's lotus feet",
+          "Severe physical austerities",
+          "Strict adherence to social and political duties"
         ],
         correct: 1 // B
       },
@@ -274,30 +274,30 @@ const DAILY_QUIZZES = {
       {
         question: "What is the result of deficiency in sex life in a Kali-yuga marriage based on sense gratification?",
         options: [
-          "The couple will seek counseling from elders.",
-          "The question of divorce will immediately arise.",
-          "The couple will turn toward spiritual life together.",
-          "They will perform penance to regain their attraction."
+          "Couple will seek counseling from elders",
+          "Question of divorce will immediately arise",
+          "Couple will turn toward spiritual life together",
+          "Perform penance to regain attraction"
         ],
         correct: 1 // B
       },
       {
         question: "In the context of 'akama sarva-kamo va', how should a person with material desires approach worship?",
         options: [
-          "They should worship many different demigods for each desire.",
-          "They should give up all worship until they are pure.",
-          "They should worship the Supreme Lord with great intensity.",
-          "They should focus only on karma-kanda rituals."
+          "Worship many demigods for each desire",
+          "Give up worship until they are pure",
+          "Worship Supreme Lord with great intensity",
+          "Focus only on karma-kanda rituals"
         ],
         correct: 2 // C
       },
       {
         question: "What was the Lord's reaction to seeing Kardama Muni's sincere penance?",
         options: [
-          "He felt indifferent to the physical suffering.",
-          "He was so pleased and compassionate that He shed tears.",
-          "He tested him by offering even more material wealth.",
-          "He asked Kardama to continue for another ten thousand years."
+          "Felt indifferent to physical suffering",
+          "So pleased and compassionate He shed tears",
+          "Tested him by offering more material wealth",
+          "Asked to continue another ten thousand years"
         ],
         correct: 1 // B
       }
