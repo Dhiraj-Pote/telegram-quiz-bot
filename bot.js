@@ -196,6 +196,113 @@ const DAILY_QUIZZES = {
       }
     ],
     validUntil: '2026-01-02'
+  },
+  '2026-01-05': {
+    questions: [
+
+      {
+        question: "Why did Kardama Muni perform penance on the bank of the Sarasvati for ten thousand years?",
+        options: [
+          "To gain mystic powers to defeat the demigods.",
+          "To escape the responsibilities of the material world.",
+          "To follow the command of Lord Brahma to increase progeny.",
+          "To find a way to become the King of the universe."
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "What is the primary spiritual guideline for selecting a spouse to ensure a stable marriage?",
+        options: [
+          "One should be enamored by external beauty and attractive features.",
+          "One should prioritize high social status and financial wealth.",
+          "One should select a partner of like disposition and spiritual compatibility.",
+          "One should choose based on the recommendation of secular friends."
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "According to SB 12th Canto, what will be the superficial basis of marriage in Kali-yuga?",
+        options: [
+          "Consideration of sex life and physical attraction.",
+          "Deep philosophical and religious agreement.",
+          "The mutual desire to serve the Supreme Lord.",
+          "Strict adherence to Vedic family lineages."
+        ],
+        correct: 0 // A
+      },
+      {
+        question: "Why did Kardama Muni worship the Supreme Lord for a wife instead of the demigoddess Uma?",
+        options: [
+          "Because he was unaware that Uma grants good wives.",
+          "Because the Bhagavatam recommends worshipping the Lord whether one has desires or not.",
+          "Because he wanted to prove he was a better yogi than others.",
+          "Because he was strictly forbidden from speaking to demigods."
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "How was the sacred Bindu-sarovara formed by the Supreme Personality of Godhead?",
+        options: [
+          "By the striking of His lotus feet upon the earth.",
+          "By the accumulation of sacrificial offerings.",
+          "From the Lord's tears of compassion for His devotee Kardama.",
+          "By the melting of the Himalayan glaciers."
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "What does Kardama Muni identify as the only 'sturdy boat' to cross the ocean of material existence?",
+        options: [
+          "The accumulation of vast empirical and Vedic knowledge.",
+          "The shelter and service of the Lord's lotus feet.",
+          "The performance of severe physical austerities.",
+          "The strict adherence to social and political duties."
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Who was the divine son promised to Kardama and Devahuti by the Lord?",
+        options: [
+          "Prahlad",
+          "Kapila",
+          "Pruthu Maharaj",
+          "Dhruva"
+        ],
+        correct: 1 // B
+      },
+      
+      {
+        question: "What is the result of deficiency in sex life in a Kali-yuga marriage based on sense gratification?",
+        options: [
+          "The couple will seek counseling from elders.",
+          "The question of divorce will immediately arise.",
+          "The couple will turn toward spiritual life together.",
+          "They will perform penance to regain their attraction."
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "In the context of 'akama sarva-kamo va', how should a person with material desires approach worship?",
+        options: [
+          "They should worship many different demigods for each desire.",
+          "They should give up all worship until they are pure.",
+          "They should worship the Supreme Lord with great intensity.",
+          "They should focus only on karma-kanda rituals."
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "What was the Lord's reaction to seeing Kardama Muni's sincere penance?",
+        options: [
+          "He felt indifferent to the physical suffering.",
+          "He was so pleased and compassionate that He shed tears.",
+          "He tested him by offering even more material wealth.",
+          "He asked Kardama to continue for another ten thousand years."
+        ],
+        correct: 1 // B
+      }
+    ],
+    validUntil: '2026-01-09'
   }
 };
 
@@ -400,7 +507,7 @@ bot.onText(/\/start/, async (msg) => {
   const welcomeMessage = `🎯 *Śrīmad Bhāgavatam Quiz\n (Canto 3 chapter 20)!*\n\n` +
 
     `⏰ Valid Until: ${validUntil}\n\n` +
-    `Please read SB (Canto 3 chapter 20)\nbefore attempting this quiz\n\n` +
+    `Please read SB (Canto 3 chapter 21)\nbefore attempting this quiz\n\n` +
 
     `${attempted && !isAdmin ? '✅ You have already taken this quiz!\nYou can review your answers.' : '✨ Ready to begin?'}`;
 
