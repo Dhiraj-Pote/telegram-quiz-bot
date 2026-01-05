@@ -904,6 +904,8 @@ async function showReview(chatId, userId, quizDate) {
 
 async function showLeaderboard(chatId, quizDate) {
   const leaderboard = await getLeaderboard(quizDate);
+  const questions = getQuizQuestions(quizDate);
+  const totalQuestions = questions.length;
 
   if (leaderboard.length === 0) {
     bot.sendMessage(chatId, '🏆 *Leaderboard*\n\nNo results yet. Be the first!', {
@@ -917,7 +919,7 @@ async function showLeaderboard(chatId, quizDate) {
   leaderboard.forEach((entry, index) => {
     const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `${index + 1}.`;
     const name = entry.first_name || entry.username || 'Anonymous';
-    leaderboardText += `${medal} *${name}* - ${entry.score}/8 (${entry.total_time}s)\n`;
+    leaderboardText += `${medal} *${name}* - ${entry.score}/${totalQuestions} (${entry.total_time}s)\n`;
   });
 
   bot.sendMessage(chatId, leaderboardText, { parse_mode: 'Markdown' });
