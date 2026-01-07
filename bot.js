@@ -307,6 +307,26 @@ const DAILY_QUIZZES = {
   '2026-01-07': {
     questions: [
       {
+        question: "What did Svāyambhuva Manu do every morning to keep his kingdom spiritual?",
+        options: [
+          "He slept until the sun was high in the sky",
+          "He listened to the pastimes of the Lord with a loving heart",
+          "He counted the taxes collected from the people",
+          "He practiced sword fighting for many hours"
+        ],
+        correct: 1
+      },
+      {
+        question: "Why is the city of Barhiṣmatī considered a holy place (pīṭha-sthāna)?",
+        options: [
+          "Because the hairs of Lord Varāha (the Boar incarnation) fell there",
+          "Because it was the capital of the largest empire",
+          "Because it was built using very expensive stones",
+          "Because the weather there was always perfect"
+        ],
+        correct: 0
+      },
+      {
         question: "What makes a person's life meaningful, even if it is very short?",
         options: [
           "Having a lot of money and power",
@@ -350,8 +370,8 @@ const DAILY_QUIZZES = {
         question: "What is the main goal of family life for a devotee?",
         options: [
           "To achieve a high status in society",
-          "To earn enough money to live comfortably",
-          "To raise a child who is a devotee of the Lord",
+          "To earn money to live comfortably",
+          "To make a child a devotee of Lord",
           "To live a long and healthy physical life"
         ],
         correct: 2 // C
@@ -377,16 +397,6 @@ const DAILY_QUIZZES = {
         correct: 2 // C
       },
       {
-        question: "How can a family live nicely without acting like animals?",
-        options: [
-          "By throwing away all material comforts",
-          "By making the home atmosphere Krishna conscious",
-          "By moving the whole family into the deep forest",
-          "By performing very painful physical penances"
-        ],
-        correct: 1 // B
-      },
-      {
         question: "Why is hearing the truth better than seeing it with our eyes?",
         options: [
           "Because eyes are too slow to see everything",
@@ -395,16 +405,6 @@ const DAILY_QUIZZES = {
           "Because you can hear things even in the dark"
         ],
         correct: 1 // B
-      },
-      {
-        question: "What is the main reason a devotee accepts family life?",
-        options: [
-          "To work hard and collect wealth for charity",
-          "To enjoy the world until they get bored of it",
-          "To raise a devotee child and then return to God",
-          "To show that they can handle family politics"
-        ],
-        correct: 2 // C
       }
     ],
     validUntil: '2026-01-11'
