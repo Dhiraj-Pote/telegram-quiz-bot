@@ -302,7 +302,112 @@ const DAILY_QUIZZES = {
         correct: 1 // B
       }
     ],
-    validUntil: '2026-01-09'
+    validUntil: '2026-01-06'
+  },
+  '2026-01-07': {
+    questions: [
+      {
+        question: "What makes a person's life meaningful, even if it is very short?",
+        options: [
+          "Having a lot of money and power",
+          "Spending every moment in spiritual service",
+          "Living longer than a thousand years",
+          "Writing many books about history"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "How can we make sure a very long life is not wasted?",
+        options: [
+          "By hearing and chanting about the Lord's pastimes",
+          "By building a famous historical legacy",
+          "By exercising to stay young forever",
+          "By traveling to every country in the world"
+        ],
+        correct: 0 // A
+      },
+      {
+        question: "Why is hearing from a spiritual teacher the best way to learn?",
+        options: [
+          "It saves us from making our own mistakes",
+          "It gives knowledge that our eyes and ears cannot reach",
+          "It is a nice social tradition to show respect",
+          "It is easier than reading books by ourselves"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Why did Kardama Muni agree to marry after being a monk?",
+        options: [
+          "He was lonely and wanted a friend",
+          "The King forced him to accept his daughter",
+          "His vow was finished and his Guru gave permission",
+          "He was tired of living in the forest"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "What is the main goal of family life for a devotee?",
+        options: [
+          "To achieve a high status in society",
+          "To earn enough money to live comfortably",
+          "To raise a child who is a devotee of the Lord",
+          "To live a long and healthy physical life"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "What was Kardama Muni's main reason for getting married?",
+        options: [
+          "To fulfill his own material desires",
+          "To follow the Lord's will and help creation",
+          "To get a portion of the King's wealth",
+          "To make his daily life easier and lazier"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "How should a devotee use their body, mind, and words?",
+        options: [
+          "To gain personal fame and mystic powers",
+          "To fulfill all social and family duties perfectly",
+          "To satisfy and please the Supreme Lord",
+          "To keep the body healthy and live for a long time"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "How can a family live nicely without acting like animals?",
+        options: [
+          "By throwing away all material comforts",
+          "By making the home atmosphere Krishna conscious",
+          "By moving the whole family into the deep forest",
+          "By performing very painful physical penances"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Why is hearing the truth better than seeing it with our eyes?",
+        options: [
+          "Because eyes are too slow to see everything",
+          "Because our senses are limited and easily tricked",
+          "Because books are more famous than memories",
+          "Because you can hear things even in the dark"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "What is the main reason a devotee accepts family life?",
+        options: [
+          "To work hard and collect wealth for charity",
+          "To enjoy the world until they get bored of it",
+          "To raise a devotee child and then return to God",
+          "To show that they can handle family politics"
+        ],
+        correct: 2 // C
+      }
+    ],
+    validUntil: '2026-01-11'
   }
 };
 
