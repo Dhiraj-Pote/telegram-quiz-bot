@@ -310,7 +310,7 @@ const DAILY_QUIZZES = {
         question: "What did Svāyambhuva Manu do every morning to keep his kingdom spiritual?",
         options: [
           "He slept until the sun was high in the sky",
-          "He listened to the pastimes of the Lord with a loving heart",
+          "He listened to the pastimes of the Lord",
           "He counted the taxes collected from the people",
           "He practiced sword fighting for many hours"
         ],
@@ -319,7 +319,7 @@ const DAILY_QUIZZES = {
       {
         question: "Why is the city of Barhiṣmatī considered a holy place (pīṭha-sthāna)?",
         options: [
-          "Because the hairs of Lord Varāha (the Boar incarnation) fell there",
+          "Because the hairs of Lord Varāha fell there",
           "Because it was the capital of the largest empire",
           "Because it was built using very expensive stones",
           "Because the weather there was always perfect"
@@ -350,7 +350,7 @@ const DAILY_QUIZZES = {
         question: "Why is hearing from a spiritual teacher the best way to learn?",
         options: [
           "It saves us from making our own mistakes",
-          "It gives knowledge that our eyes and ears cannot reach",
+          "It gives knowledge inaccessible to eyes and ears",
           "It is a nice social tradition to show respect",
           "It is easier than reading books by ourselves"
         ],
